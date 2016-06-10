@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
+    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript">
+        function reset() {
+            alert("Authentication failed");
+            $("#reset_data").trigger("click");
+        }
+        function login() {
+            var username = $("#userName")[0].value;
+            var password = $("#pwrd")[0].value; 
+
+            if (username == "") {
+                return;
+            }
+            if (password == "") {
+                return;
+            }
+
+            var userData = {
+                user: {
+                    userName : username,
+                    password : password
+                }                
+            }
+
+            $.ajax({
+                url: "/login",
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                userData: JSON.stringify(userData),
+                statusCode: {
+                    401: reset(),
+                    200: function () {
+                        window.location.replace("index.html");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    
+    <h1 align="center">
+        <b>Login</b>
+    </h1>
+    <form id="login_form" role="form" method="post">
+       <div class="form-group">
+         <input type="text" class="form-control" id="userName" required="required" placeholder="User Name" value="" />
+       </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
+        </div>
+        <button type="reset" class="btn btn-default" id="reset_data">Reset</button>
+        <button type="submit" onclick="login()" id="submit_data" class="btn btn-default">Login</button>
+    </form>
+
+</body>
+</html>
