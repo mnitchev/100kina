@@ -5,7 +5,9 @@ import javax.persistence.PersistenceContext;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.UserDAO;
+import stoKina.dao.SeatDAO;
 import stoKina.model.Movie;
+import stoKina.model.Seat;
 import stoKina.model.User;
 
 public class DatabaseUtils {
@@ -19,12 +21,15 @@ public class DatabaseUtils {
 	            new User("100kila", "kilatamaika", "kilata@abv.bg")};
 
 	    private static Movie[] MOVIES = {
-	            new Movie("Star wars: The Force Awakens", "10:00", 5),
-	            new Movie("Star wars: The Force Awakens", "12:00", 5),
-	            new Movie("Star wars: The Force Awakens", "14:00", 5),
-	            new Movie("Star wars: The Force Awakens", "16:00", 5),
-	            new Movie("Star wars: The Force Awakens", "18:00", 5),
-	            new Movie("Star wars: The Force Awakens", "20:00", 5)};
+	            new Movie("Star wars: The Force Awakens", "10:00"),
+	            new Movie("Star wars: The Force Awakens", "12:00"),
+	            new Movie("Star wars: The Force Awakens", "14:00"),
+	            new Movie("Star wars: The Force Awakens", "16:00"),
+	            new Movie("Star wars: The Force Awakens", "18:00"),
+	            new Movie("Star wars: The Force Awakens", "20:00")};
+	    
+	    private static Seat[] SEATS = {
+	    		new Seat(5,0)};
 
 	    @PersistenceContext
 	    private EntityManager em;
@@ -34,15 +39,19 @@ public class DatabaseUtils {
 	    
 	    private UserDAO userDAO;
 	    
+	    private SeatDAO seatDAO;
+	    
 	    public void addTestDataToDB() {
 	        deleteData();
 	        addTestUsers();
-	        addTestBooks();
+	        addTestMovies();
+	        addTestSeats();
 	    }
 
 	    private void deleteData() {
-	        em.createQuery("DELETE FROM Book").executeUpdate();
+	        em.createQuery("DELETE FROM Movie").executeUpdate();
 	        em.createQuery("DELETE FROM User").executeUpdate();
+	        em.createQuery("DELETe FROM Seat").executeUpdate();
 	   }
 
 	    private void addTestUsers() {
@@ -51,9 +60,15 @@ public class DatabaseUtils {
 	        }
 	    }
 
-	    private void addTestBooks() {
-	        for (Movie book : MOVIES) {
-	            movieDAO.addBook(book);
+	    private void addTestMovies() {
+	        for (Movie movie : MOVIES) {
+	            movieDAO.addMovie(movie);
 	        }
+	    }
+	    
+	    private void addTestSeats() {
+	    	for(Seat seat: SEATS) {
+	    		seatDAO.addSeat(seat);
+	    	}
 	    }
 }

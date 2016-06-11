@@ -1,17 +1,26 @@
 package stoKina.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class User {
-    @Id
+@NamedQueries({
+    @NamedQuery(name = "validateUser", query = "SELECT u FROM User u WHERE u.userName=:userName AND u.password=:password"),
+    @NamedQuery(name = "getAllUsers", query = "SELECT m FROM User m "),
+    @NamedQuery( name = "findUserByName", query = "SELECT m FROM User m WHERE u.userName=:userName")})
+public class User implements Serializable{
+    
+	private static final long serialVersionUID = -1499972552436486091L;
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String userName;
@@ -19,7 +28,8 @@ public class User {
 	private String email;
 
     @OneToMany
-    private Set<Movie> currentBooks = new HashSet<>();
+    private Set<Movie> paidForMovies = new HashSet<>();
+    
     
     public User() {
     }
@@ -74,12 +84,12 @@ public class User {
         return result;
     }
 
-    public Set<Movie> getCurrentBooks() {
-        return this.currentBooks;
+    public Set<Movie> getPaidForMovies() {
+        return this.paidForMovies;
     }
 
-    public void setCurrentBooks(final Set<Movie> currentBooks) {
-        this.currentBooks = currentBooks;
+    public void setCurrentBooks(final Set<Movie> paidForMovies) {
+        this.paidForMovies = paidForMovies;
     }
 
     @Override

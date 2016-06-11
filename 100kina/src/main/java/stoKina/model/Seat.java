@@ -1,10 +1,18 @@
 package stoKina.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @XmlRootElement
 public class Seat {
-    //от този масив се определя seatType-а, идеята е с индексиране да виждаме дали е свободен, резервиран или зает
 	private static final String[] type= {"FREE", "RESERVED", "TAKEN" };
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private double price;
 	private int seatType;

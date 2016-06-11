@@ -1,14 +1,30 @@
 package stoKina.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @XmlRootElement
-public class Movie {
+@NamedQueries({
+        @NamedQuery(name = "findByTitleAndTime", query = "SELECT m FROM Movie m WHERE m.title = :title AND m.time = :author"),
+        @NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m ")})
+public class Movie implements Serializable{
 	
+	
+	private static final long serialVersionUID = -7936362793263897507L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String title;
 	private String time;
@@ -19,14 +35,9 @@ public class Movie {
 	
 	public Movie() {
 	}	
-	public Movie(String title, String time, double seatPrice) {
+	public Movie(String title, String time) {
 		this.title = title;
 		this.time = time;
-		//идеята е да има "default"-ни 20 билета за всеки филм, които са свободни при първоначално
-		//инициализиране на филма, с цена за съответния филм
-		for(int i = 0; i < 20; i++) {
-			seats.add(new Seat(seatPrice, 0));
-		}
 	}
 	public Long getId() {
         return this.id;
