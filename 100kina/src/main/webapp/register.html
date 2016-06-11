@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,10 +10,45 @@
     <script type="text/javascript">
         function isPasswordValid(password) {
             var confirm_pass = $("#confirm_pwrd")[0].value;
-            
+            if (password != confirm_pass) {
+                alert("Passwords do not match!");
+                return false;
+            }
+            return true;
         }
         function register() {
-            
+            var formURL = $("#register_form").attr("action");
+            var username = $("#userName")[0].value;
+            var password = $("#pwrd")[0].value;
+            var email = $("#email")[0].value;
+
+            if(!isPasswordValid(password)){
+                return;
+            }
+
+            var data = {
+                user: {
+                    userName: username,
+                    password: pwrd,
+                    email: email
+                }
+            }
+
+            $.ajax({
+                url: 'rest/user',
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(data)
+            })
+            .success(function (data) {
+                $("#register_form").attr("action", "index.html");
+            })
+            .fail(function (data) {
+                $("register_form").attr("action", "register.html");
+            })
+            .always(function () {
+                $("#register_form").submit();
+            });
         }
 
     </script>
@@ -28,16 +63,16 @@
             <input type="text" class="form-control" id="userName" required="required" placeholder="User Name" value="" />
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
+            <input type="password" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="confirm_pwrd" required="required" placeholder="Confirm Password" value="" />
+            <input type="password" class="form-control" id="confirm_pwrd" required="required" placeholder="Confirm Password" value="" />
         </div>
         <div class="form-group">
             <input type="text" class="form-control"  id="email" placeholder="E-mail" value="" />
         </div>
         <button type="reset" class="btn btn-default" id="reset_data">Reset</button>
-        <button type="submit" onclick="login()" id="submit_data" class="btn btn-default">Register</button>
+        <button type="submit" onclick="register()" class="btn btn-default">Register</button>
     </form>
 </body>
 </html>
