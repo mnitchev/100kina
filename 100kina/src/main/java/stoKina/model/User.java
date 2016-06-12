@@ -29,8 +29,6 @@ public class User implements Serializable{
 	private String userName;
 	private String password;
 	private String email;
-	
-	private String position;
 
     @OneToMany
     private Set<Ticket> paidTickets = new HashSet<>();
@@ -38,11 +36,10 @@ public class User implements Serializable{
 	public User() {
     }
 
-    public User(String userName, String password, String email, String position) {
+    public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.setPosition(position);
     }
 
     public Long getId() {
@@ -120,12 +117,4 @@ public class User implements Serializable{
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
 }
