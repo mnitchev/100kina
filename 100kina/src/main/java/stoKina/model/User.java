@@ -1,4 +1,4 @@
-package stoKina.model;
+	package stoKina.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
