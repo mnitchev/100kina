@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,32 +13,36 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "validateUser", query = "SELECT u FROM User u WHERE u.userName=:userName AND u.password=:password"),
-    @NamedQuery(name = "getAllUsers", query = "SELECT m FROM User m "),
-    @NamedQuery( name = "findUserByName", query = "SELECT m FROM User m WHERE u.userName=:userName")})
+    @NamedQuery(name = "getAllUsers", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "findByName", query = "SELECT u FROM User u WHERE u.userName=:userName")})
 public class User implements Serializable{
     
 	private static final long serialVersionUID = -1499972552436486091L;
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	private String userName;
 	private String password;
 	private String email;
+	
+	private String position;
 
     @OneToMany
-    private Set<Movie> paidForMovies = new HashSet<>();
-    
-    
-    public User() {
+    private Set<Ticket> paidTickets = new HashSet<>();
+
+	public User() {
     }
 
-    public User(String userName, String password, String email) {
+    public User(String userName, String password, String email, String position) {
         this.userName = userName;
         this.password = password;
         this.email = email;
+        this.setPosition(position);
     }
 
     public Long getId() {
@@ -71,6 +76,13 @@ public class User implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
+    public Set<Ticket> getPaidTickets() {
+		return paidTickets;
+	}
+
+	public void setPaidTickets(Set<Ticket> paidTickets) {
+		this.paidTickets = paidTickets;
+	}
 
     @Override
     public String toString() {
@@ -82,14 +94,6 @@ public class User implements Serializable{
         if (email != null && !email.trim().isEmpty())
             result += ", email: " + email;
         return result;
-    }
-
-    public Set<Movie> getPaidForMovies() {
-        return this.paidForMovies;
-    }
-
-    public void setCurrentBooks(final Set<Movie> paidForMovies) {
-        this.paidForMovies = paidForMovies;
     }
 
     @Override
@@ -116,4 +120,12 @@ public class User implements Serializable{
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
 }

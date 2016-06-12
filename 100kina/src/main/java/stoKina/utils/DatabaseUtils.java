@@ -5,31 +5,26 @@ import javax.persistence.PersistenceContext;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.UserDAO;
-import stoKina.dao.SeatDAO;
 import stoKina.model.Movie;
-import stoKina.model.Seat;
 import stoKina.model.User;
 
 public class DatabaseUtils {
 	    
 	    private static User[] USERS = {
-	            new User("kriska", "kriska", "kriska@abv.bg"),
-	            new User("bojkata", "superqkataparola", "glorfindel@abv.bg"),
-	            new User("vasko", "witcher3thebest", "vasilnikolov@abv.bg"),
-	            new User("dani", "daniboy", "dani@abv.bg"),
-	            new User("mario", "3kapodis", "supermario@abv.bg"),
-	            new User("100kila", "kilatamaika", "kilata@abv.bg")};
+	            new User("kriska", "kriska", "kriska@abv.bg", "member"),
+	            new User("bojkata", "superqkataparola", "glorfindel@abv.bg","member"),
+	            new User("vasko", "witcher3thebest", "vasilnikolov@abv.bg","admin"),
+	            new User("dani", "daniboy", "dani@abv.bg","member"),
+	            new User("mario", "3kapodis", "supermario@abv.bg","member"),
+	            new User("100kila", "kilatamaika", "kilata@abv.bg","member")};
 
 	    private static Movie[] MOVIES = {
-	            new Movie("Star wars: The Force Awakens", "10:00"),
-	            new Movie("Star wars: The Force Awakens", "12:00"),
-	            new Movie("Star wars: The Force Awakens", "14:00"),
-	            new Movie("Star wars: The Force Awakens", "16:00"),
-	            new Movie("Star wars: The Force Awakens", "18:00"),
-	            new Movie("Star wars: The Force Awakens", "20:00")};
-	    
-	    private static Seat[] SEATS = {
-	    		new Seat(5,0)};
+	            new Movie("Star wars: The Force Awakens"),
+	            new Movie("Star wars: The Force Awakens"),
+	            new Movie("Star wars: The Force Awakens"),
+	            new Movie("Star wars: The Force Awakens"),
+	            new Movie("Star wars: The Force Awakens"),
+	            new Movie("Star wars: The Force Awakens")};
 
 	    @PersistenceContext
 	    private EntityManager em;
@@ -39,19 +34,16 @@ public class DatabaseUtils {
 	    
 	    private UserDAO userDAO;
 	    
-	    private SeatDAO seatDAO;
-	    
 	    public void addTestDataToDB() {
 	        deleteData();
 	        addTestUsers();
 	        addTestMovies();
-	        addTestSeats();
 	    }
 
 	    private void deleteData() {
 	        em.createQuery("DELETE FROM Movie").executeUpdate();
 	        em.createQuery("DELETE FROM User").executeUpdate();
-	        em.createQuery("DELETe FROM Seat").executeUpdate();
+	        em.createQuery("DELETE FROM Ticket").executeUpdate();
 	   }
 
 	    private void addTestUsers() {
@@ -64,11 +56,5 @@ public class DatabaseUtils {
 	        for (Movie movie : MOVIES) {
 	            movieDAO.addMovie(movie);
 	        }
-	    }
-	    
-	    private void addTestSeats() {
-	    	for(Seat seat: SEATS) {
-	    		seatDAO.addSeat(seat);
-	    	}
 	    }
 }
