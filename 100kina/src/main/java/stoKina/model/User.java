@@ -22,6 +22,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class User implements Serializable{
     
 	private static final long serialVersionUID = -1499972552436486091L;
+	public static final String ADMINISTRATOR = "administrator";
+	public static final String STAFF = "staff";
+	public static final String USER = "user";
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -29,6 +33,8 @@ public class User implements Serializable{
 	private String userName;
 	private String password;
 	private String email;
+	
+	private String role;
 
     @OneToMany
     private Set<Ticket> paidTickets = new HashSet<>();
@@ -40,8 +46,14 @@ public class User implements Serializable{
         this.userName = userName;
         this.password = password;
         this.email = email;
+        this.role = USER;
     }
-
+    public User(String userName, String password, String email, String role) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
     public Long getId() {
         return this.id;
     }
@@ -117,4 +129,12 @@ public class User implements Serializable{
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

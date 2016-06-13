@@ -15,7 +15,7 @@ public class DatabaseUtils {
 	            new User("bojkata", "superqkataparola", "glorfindel@abv.bg"),
 	            new User("vasko", "witcher3thebest", "vasilnikolov@abv.bg"),
 	            new User("dani", "daniboy", "dani@abv.bg"),
-	            new User("mario", "3kapodis", "supermario@abv.bg"),
+	            new User("mario", "3kapodis", "supermario@abv.bg", User.ADMINISTRATOR),
 	            new User("100kila", "kilatamaika", "kilata@abv.bg")};
 
 	    private static Movie[] MOVIES = {
