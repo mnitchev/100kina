@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import stoKina.model.User;
 import stoKina.services.UserContext;
 
-@WebFilter("/movies")
-public class RestrictedResourceFilter implements Filter {
-
-	@Inject
-	UserContext currentUser;
+@WebFilter("/secure/*")
+public class StaffResourcesFilter implements Filter {
 	
+	@Inject
+	UserContext context;
+
 	@Override
-	public void destroy() {	
+	public void destroy() {
 		// TODO Auto-generated method stub
 
 	}
@@ -34,11 +34,11 @@ public class RestrictedResourceFilter implements Filter {
 		if(!isHttpCall(request, response)){
 			return;
 		}
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		User user = currentUser.getCurrentUser();
-		if(user == null){
-			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.html");
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		User currentUser = context.getCurrentUser();
+		if(currentUser == null || currentUser.getRole().equals(User.STAFF)){
+			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
 			return;
 		}
 		chain.doFilter(request, response);
@@ -48,7 +48,7 @@ public class RestrictedResourceFilter implements Filter {
         return (request instanceof HttpServletRequest)
                 && (response instanceof HttpServletResponse);
     }
-
+	
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
