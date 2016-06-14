@@ -3,12 +3,14 @@ package stoKina.dao;
 import java.security.MessageDigest;
 import java.util.Collection;
 
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import stoKina.model.User;
 
+@Singleton
 public class UserDAO {
 
     @PersistenceContext

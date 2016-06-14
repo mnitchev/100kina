@@ -16,13 +16,15 @@ public class Seat {
 	private Long id;
 	private double price;
 	private int seatType;
+	private int seatNumber;
 	
 	public Seat() {
 		
 	}
-	public Seat(double price, int seatType) {
+	public Seat(double price, int seatType, int seatNumber) {
 		this.price = price;
 		this.seatType = seatType;
+		this.seatNumber = seatNumber;
 	}
 	public Long getId() {
 		return id;
@@ -43,6 +45,13 @@ public class Seat {
 		if(seatType >= 0 && seatType <= 2)
 		this.seatType = seatType;
 	}
+	public int getSeatNumber() {
+		return seatNumber;
+	}
+	public void setSeatNumber(int seatNumber) {
+		this.seatNumber = seatNumber;
+	}
+	
 	@Override
 	public String toString() {
         return getClass().getSimpleName() + " " + getSeatType() + " " + price;

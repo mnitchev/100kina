@@ -2,11 +2,13 @@ package stoKina.dao;
 
 import java.util.Date;
 
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import stoKina.model.Ticket;
 
+@Singleton
 public class TicketDAO {
 
     @PersistenceContext
