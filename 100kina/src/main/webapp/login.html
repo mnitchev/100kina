@@ -6,7 +6,7 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
-    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript">
         function reset() {
             alert("Authentication failed");
@@ -46,20 +46,58 @@
     </script>
 </head>
 <body>
+    <!-- Header Navigation  -->
+    <div class="navbar navbar-default navbar-fixed-top">
+    	<div class="container">
+    		<div class="navbar-header">
+    			<a href="https://www.google.bg/" class="navbar-brand">100 KINA</a>
+    			 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+    		</div>
+    		<div class="navbar-collapse collapse" id="navbar-main">
+    			<ul class="nav navbar-nav">
+    				<li>
+    					<a href="http://www.cinemacity.bg/movies">Program</a>
+    				</li>
+    				<li>
+    					<a href="login.html">Login</a>
+    				</li>
+    				<li>
+    					<a href="register.html">Register</a>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+    </div>
     
-    <h1 align="center">
+    
+    
+    <h1 style="text-align:center">
         <b>Login</b>
     </h1>
-    <form id="login_form" role="form" method="post">
+    <form class="form-horizontal" id="login_form" method="post">
+    <fieldset>
        <div class="form-group">
-         <input type="text" class="form-control" id="userName" required="required" placeholder="User Name" value="" />
+         <label for="userName" class="col-lg-3 control-label col-md-offset-1">User name</label>
+            <div class="col-lg-7">
+            	<input type="text" class="form-control" id="userName" required="required" placeholder="User name" value="" />
+        	</div>
        </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
+            <label for="password" class="col-lg-3 control-label col-md-offset-1">Password</label>
+            <div class="col-lg-7">
+            	<input type="password" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
+        	</div>
         </div>
-        <button type="reset" class="btn btn-default" id="reset_data">Reset</button>
-        <button type="submit" onclick="login()" id="submit_data" class="btn btn-default">Login</button>
+         <div class="col-lg-7 col-lg-offset-4">
+        	<button type="reset" class="btn btn-default" id="reset_data">Reset</button>
+        	<button type="submit" onclick="register()" class="btn btn-default">Register</button>
+       	</div>
+    </fieldset>
     </form>
-
+	
 </body>
 </html>
