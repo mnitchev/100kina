@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+<body>
+
+
+<!-- JS  -->
+<script>
+	var numberOfTickets = 0;
+	var seatList = [6, 7, 8, 9];
+	var selectedSeats = 0;
+	var selectedSeatsList = ["adwd"];
+	function storeTickets(){
+		numberOfTickets = $("#tickets :selected").val();
+	}
+	
+	$(document).ready(function produceSeats(){
+		$.ajax({
+			url: " ",
+			type: "GET",
+			success: function(seats){
+				//for(var i in seats){
+				//	seatList.push(seats[i]);
+				//}
+			}
+		});
+			
+		var htmlCollector = "";
+		htmlCollector += "<div class=\"btn-toolbar\"><div class=\"btn-group \">";
+		console.log(htmlCollector);
+		htmlCollector += getButtonHtml();
+		htmlCollector += "</div>";
+		$("#SeatsContainer").html(htmlCollector);
+	});
+	
+	
+	
+	function getButtonHtml(){
+		var buttonHtml = "";
+		for(var i = 1; i <= 20; i++){
+			if(seatList.includes(i)){
+				buttonHtml += "<a href=\"#\" id=\"B" + i + "\" class=\"btn btn-danger disabled\">" + i + "</a>";
+			}
+			else{
+				buttonHtml += "<a href=\"#\" id=\"B" + i + "\" class=\"btn btn-default\">" + i + "</a>";
+			}
+			
+			if(i % 5 == 0 && i < 20)
+				{
+				buttonHtml += "</div></div> <div class=\"btn-toolbar \"><div class=\"btn-group\">";
+				}
+			}
+		return buttonHtml;
+	}
+	$(document).on('click', '.btn', function(){
+		if(!$(this).hasClass("btn-info")){
+				if(numberOfTickets == 0){
+					alert("Select seat(s)!");
+					location.reload();
+				}
+				else{
+					if($(this).hasClass("btn-success")){
+						$(this).replaceWith("<a href=\"#\" class=\"btn btn-default\">" + $(this).text() + "</a>");
+						var index = selectedSeatsList.indexOf($(this).text());
+						selectedSeatsList.splice(index, 1);
+						selectedSeats--;
+					}
+					else{
+						if(selectedSeats >= numberOfTickets){
+							alert("You already selected " + numberOfTickets + "seat(s)!");
+							location.reload();
+						}
+						$(this).replaceWith("<a href=\"#\" class=\"btn btn-success\">" + $(this).text() + "</a>");
+						selectedSeatsList.push($(this).text());
+						selectedSeats++;
+					}
+				}
+			}
+		for(var i in selectedSeatsList){
+			console.log(selectedSeatsList[i]);
+		}
+		console.log(selectedSeats);
+	})
+	
+</script>
+
+
+<!-- Header Navigation  -->
+    <div class="navbar navbar-default navbar-fixed-top">
+    	<div class="container">
+    		<div class="navbar-header">
+    			<a href="https://www.google.bg/" class="navbar-brand">100 KINA</a>
+    			 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+    		</div>
+    		<div class="navbar-collapse collapse" id="navbar-main">
+    			<ul class="nav navbar-nav">
+    				<li>
+    					<a href="http://www.cinemacity.bg/movies">Program</a>
+    				</li>
+    				<li>
+    					<a href="login.html">Login</a>
+    				</li>
+    				<li>
+    					<a href="register.html">Register</a>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+    </div>
+
+    <div class="row">
+    	<div class="col-lg-6 col-md-offset-3">
+    		<div class="well bs-component">
+    		<form class="form-horizontal">
+    		<fieldset>
+   				<div class="form-group">
+			    <label for="select" class="col-lg-3 control-label">Select number of tickets</label>
+			    <div class="col-lg-8 ">
+			        <select oninput="storeTickets()" class="form-control" id="tickets">
+			        	<option>0</option>
+			        	<option>1</option>
+			         	<option>2</option>
+			          	<option>3</option>
+			          	<option>4</option>
+			          	<option>5</option>
+			        </select>
+    			</div>
+    			</div>
+    			</br>
+    			<div style="text-align:center;font-size:150%;"><p class="text-info">Please select seats: </p></div>
+    			<div class="col-md-offset-4" id="SeatsContainer" ></div>
+    			</br>
+    			<a href="https://www.amazon.com/" id="buy" class="btn btn-info col-md-offset-4 col-lg-2">Buy</a>
+  			</fieldset>
+			</form>
+   			</div>
+   		</div>
+   	</div>
+   
+    
+    </body>
+</html>
+
