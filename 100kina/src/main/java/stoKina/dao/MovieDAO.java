@@ -62,6 +62,7 @@ public class MovieDAO {
     public Collection<Movie> getAllMovies() {
         return em.createNamedQuery("getAllMovies", Movie.class).getResultList();
     }
+    
 	public Movie findById(long key) {
         return em.find(Movie.class, key);
 	}
