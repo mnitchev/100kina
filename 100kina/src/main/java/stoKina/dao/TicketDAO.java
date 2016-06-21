@@ -1,6 +1,5 @@
 package stoKina.dao;
 
-import java.util.Date;
 
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
@@ -14,8 +13,15 @@ public class TicketDAO {
     @PersistenceContext
     private EntityManager em;
     
-    
-	public void addTicket(int seatNumber, String movieTitle, Date timeOfEntry) {
-        em.persist(new Ticket(seatNumber,movieTitle,timeOfEntry));
+    public Ticket findById(long key) {
+        return em.find(Ticket.class, key);
 	}
+    
+    public void addTicket(Ticket ticket) {
+    	em.persist(ticket);
+    }
+    
+	/*public void addTicket(int seatNumber, String movieTitle, Date timeOfEntry) {
+        em.persist(new Ticket(seatNumber, movieTitle, timeOfEntry));
+	}*/
 }

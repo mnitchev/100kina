@@ -30,11 +30,11 @@ public class Ticket implements Serializable{
 	public Ticket() {
 	}
 	
-	public Ticket(Integer seatNumber, String movieTitle, Date timeOfEntry) {
+	public Ticket(Integer seatNumber, String movieTitle) {
 		super();
 		this.seatNumber = seatNumber;
 		this.movieTitle = movieTitle;
-		this.timeOfEntry = timeOfEntry;
+		this.timeOfEntry = new Date();
 	}
 
 	public Long getId() {

@@ -1,7 +1,6 @@
 package stoKina.dao;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
@@ -11,7 +10,6 @@ import javax.persistence.TypedQuery;
 
 import stoKina.model.User;
 import stoKina.model.Movie;
-import stoKina.model.Seat;
 import stoKina.model.Ticket;
 
 @Singleton
@@ -56,12 +54,9 @@ public class MovieDAO {
 //        foundMovie.getUsers().add(foundUser);
 //    }
     
-    public void buyTicket(Movie movieToReserve, User user, Seat seat) {
-        new TicketDAO().addTicket(seat.getSeatNumber(), movieToReserve.getTitle(), new Date());
-        Movie foundMovie = findByTitle(movieToReserve.getTitle());
-        //User foundUser = new UserDAO().findUserByName(user.getUserName());
-        user.getPaidTickets().add(new Ticket(seat.getSeatNumber(), movieToReserve.getTitle(), new Date()));
-        foundMovie.getUsers().add(user);
+    public void buyTicket(Movie movieToReserve, User user, Ticket ticket) {
+        user.getPaidTickets().add(ticket);
+        movieToReserve.getUsers().add(user);
     }
 
     public Collection<Movie> getAllMovies() {
