@@ -1,9 +1,10 @@
 package stoKina.dao;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,21 +17,26 @@ public class UserDAO {
     @PersistenceContext
     private EntityManager em;
 
+    
 	public void addUser(User user) {
 		user.setPassword(getHashedPassword(user.getPassword()));
+		user.setRole(User.USER);
         em.persist(user);
 	}
-	 public boolean validateUserCredentials(String userName, String password) {
-		 TypedQuery<User> query = em.createNamedQuery("validateUser", User.class)
-	                .setParameter("userName", userName)
-	                .setParameter("password", getHashedPassword(password));
+	
+	public boolean validateUserCredentials(String userName, String password) {
+		 TypedQuery<User> query = em.createNamedQuery("validateUser", User.class);
+		 query.setParameter("userName", userName);
+	     query.setParameter("password", getHashedPassword(password));
 	      
 		 try {
-	          return query.getSingleResult() != null ? true : false;
+	          return query.getSingleResult() != null;
 	        } catch (Exception e) {
+	        	e.printStackTrace();
 	            return false;
 	        }
 	    }
+	
 	 public User findUserByName(String userName) {
 	     TypedQuery<User> query = em.createNamedQuery("findUserByName", User.class)
 	    		 .setParameter("userName", userName);
@@ -44,12 +50,22 @@ public class UserDAO {
 	        return em.createNamedQuery("getAllUsers", User.class).getResultList();
 	    }
 	private String getHashedPassword(String password) {
+    	String generatedPassword;
         try {
-            MessageDigest mda = MessageDigest.getInstance("SHA-512");
-            password = new String(mda.digest(password.getBytes()));
-        } catch (Exception e) {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {
             e.printStackTrace();
+            return null;
         }
-        return password;
+        return generatedPassword;
     }
 }

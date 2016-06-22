@@ -5,17 +5,25 @@
     <meta charset="utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript">
         function reset() {
             alert("Authentication failed");
             $("#reset_data").trigger("click");
         }
+        var username = "";
+    	function storeUserName(){
+    		username = $("#userName").val();
+    	}
+    	var password = "";
+    	function storePassword(){
+    		password = $("#pwd").val();
+    		
+    	}
         function login() {
-            var username = $("#userName")[0].value;
-            var password = $("#pwrd")[0].value; 
-
+        	console.log(username);
+    	    console.log(password);
+    	    
             if (username == "") {
                 return;
             }
@@ -29,12 +37,11 @@
                     password : password
                 }                
             }
-
             $.ajax({
-                url: "/login",
+                url: 'rest/user/login',
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
-                userData: JSON.stringify(userData),
+                data: JSON.stringify(userData),
                 statusCode: {
                     401: reset(),
                     200: function () {
@@ -83,18 +90,18 @@
        <div class="form-group">
          <label for="userName" class="col-lg-3 control-label col-md-offset-1">User name</label>
             <div class="col-lg-7">
-            	<input type="text" class="form-control" id="userName" required="required" placeholder="User name" value="" />
+            	<input type="text" onchange="storeUserName()" class="form-control" id="userName" required="required" placeholder="User name" value="" />
         	</div>
        </div>
         <div class="form-group">
             <label for="password" class="col-lg-3 control-label col-md-offset-1">Password</label>
             <div class="col-lg-7">
-            	<input type="password" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
+            	<input type="password" onchange="storePassword()" class="form-control" id="pwd" required="required" placeholder="Password" value="" />
         	</div>
         </div>
          <div class="col-lg-7 col-lg-offset-4">
         	<button type="reset" class="btn btn-default" id="reset_data">Reset</button>
-        	<button type="submit" onclick="register()" class="btn btn-default">Register</button>
+        	<button type="submit" onclick="login()" class="btn btn-default">Login</button>
        	</div>
     </fieldset>
     </form>

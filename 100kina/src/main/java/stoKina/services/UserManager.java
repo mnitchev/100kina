@@ -28,9 +28,10 @@ public class UserManager {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void registerUser(User user){
+	public Response registerUser(User user){
 		userDAO.addUser(user);
 		context.setCurrentUser(user);
+		return RESPONSE_OK;		
 	}
 	
 	@Path("login")

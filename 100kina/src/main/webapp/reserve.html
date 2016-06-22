@@ -10,6 +10,17 @@
 </head>
 <body>
 
+<style>
+	#SeatsContainer .btn-toolbar{
+		text-align: center;
+	}
+	.buy-button-wrapper {
+		text-align:center;
+	}
+	.btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group{
+		float: none !important;
+	}
+</style>
 
 <!-- JS  -->
 <script>
@@ -137,11 +148,9 @@
 			        </select>
     			</div>
     			</div>
-    			</br>
     			<div style="text-align:center;font-size:150%;"><p class="text-info">Please select seats: </p></div>
-    			<div class="col-md-offset-4" id="SeatsContainer" ></div>
-    			</br>
-    			<a href="https://www.amazon.com/" id="buy" class="btn btn-info col-md-offset-4 col-lg-2">Buy</a>
+    			<div id="SeatsContainer" ></div>
+    			<div class="buy-button-wrapper"><a href="https://www.amazon.com/" id="buy" style="float: none !important;" class="btn btn-info col-lg-2">Buy</a></div>
   			</fieldset>
 			</form>
    			</div>

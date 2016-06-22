@@ -3,6 +3,9 @@ package stoKina.utils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,6 +14,7 @@ import stoKina.dao.UserDAO;
 import stoKina.model.Movie;
 import stoKina.model.User;
 
+@Stateless
 public class DatabaseUtils {
 	    
 	    private static User[] USERS = {
@@ -33,10 +37,12 @@ public class DatabaseUtils {
 	    @PersistenceContext
 	    private EntityManager em;
 
-	    
+	    @EJB
 	    private MovieDAO movieDAO;
 	    
+	    @EJB
 	    private UserDAO userDAO;
+	    
 	    
 	    public void addTestDataToDB() {
 	        deleteData();
@@ -52,7 +58,7 @@ public class DatabaseUtils {
 
 	    private void addTestUsers() {
 	        for (User user : USERS) {
-	            userDAO.addUser(user);
+	        	userDAO.addUser(user);
 	        }
 	    }
 

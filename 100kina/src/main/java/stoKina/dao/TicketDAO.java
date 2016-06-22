@@ -1,7 +1,7 @@
 package stoKina.dao;
 
 
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

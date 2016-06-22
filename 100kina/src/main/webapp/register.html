@@ -5,11 +5,14 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
-    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script type="text/javascript">
+    	function reset() {
+        	alert("Registration failed!");
+        	$("#reset_data").trigger("click");
+    	}
         function isPasswordValid(password) {
-            var confirm_pass = $("#confirm_pwrd")[0].value;
+            var confirm_pass = $("#confirm_pwd").val();
             if (password != confirm_pass) {
                 alert("Passwords do not match!");
                 return false;
@@ -18,36 +21,34 @@
         }
         function register() {
             var formURL = $("#register_form").attr("action");
-            var username = $("#userName")[0].value;
-            var password = $("#pwrd")[0].value;
-            var email = $("#email")[0].value;
+            var username = $("#userName").val();
+            var password = $("#pwd").val();
+            var email = $("#email").val();
 
             if(!isPasswordValid(password)){
+            	alert("Passwords must match!");
                 return;
             }
 
-            var data = {
+            var userData = {
                 user: {
                     userName: username,
-                    password: pwrd,
+                    password: password,
                     email: email
                 }
             }
-
             $.ajax({
                 url: 'rest/user',
                 type: "POST",
                 contentType: "application/json;charset=UTF-8",
-                data: JSON.stringify(data)
-            })
-            .success(function (data) {
-                $("#register_form").attr("action", "index.html");
-            })
-            .fail(function (data) {
-                $("register_form").attr("action", "register.html");
-            })
-            .always(function () {
-                $("#register_form").submit();
+                data: JSON.stringify(userData),
+           		statusCode: {
+                    200: function () {
+                    	alert("Success!");
+                    	window.location.replace("login.html");
+                       
+                    }
+                }
             });
         }
 
@@ -85,7 +86,7 @@
         <b>Register</b>
     </h1>
 
-    <form class="form-horizontal" method="post" id="register_form">
+    <form class="form-horizontal" method="post" id="register_form" role="form">
     <fieldset>
         <div class="form-group">
             <label for="userName" class="col-lg-3 control-label col-md-offset-1">User name</label>
@@ -96,13 +97,13 @@
          <div class="form-group">
             <label for="password" class="col-lg-3 control-label col-md-offset-1">Password</label>
             <div class="col-lg-7">
-            	<input type="password" class="form-control" id="pwrd" required="required" placeholder="Password" value="" />
+            	<input type="password" class="form-control" id="pwd" required="required" placeholder="Password" value="" />
         	</div>
         </div>
          <div class="form-group">
-            <label for="confirm_pwrd" class="col-lg-3 control-label col-md-offset-1">Confirm password</label>
+            <label for="confirm_pwd" class="col-lg-3 control-label col-md-offset-1">Confirm password</label>
             <div class="col-lg-7">
-            	<input type="password" class="form-control" id="confirm_pwrd" required="required" placeholder="Confirm Password" value="" />
+            	<input type="password" class="form-control" id="confirm_pwd" required="required" placeholder="Confirm Password" value="" />
         	</div>
         </div>
          <div class="form-group">
