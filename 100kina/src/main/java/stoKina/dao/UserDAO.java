@@ -20,7 +20,6 @@ public class UserDAO {
     
 	public void addUser(User user) {
 		user.setPassword(getHashedPassword(user.getPassword()));
-		user.setRole(User.USER);
         em.persist(user);
 	}
 	
@@ -28,14 +27,13 @@ public class UserDAO {
 		 TypedQuery<User> query = em.createNamedQuery("validateUser", User.class);
 		 query.setParameter("userName", userName);
 	     query.setParameter("password", getHashedPassword(password));
-	      
 		 try {
-	          return query.getSingleResult() != null;
-	        } catch (Exception e) {
-	        	e.printStackTrace();
-	            return false;
-	        }
-	    }
+		      return query.getSingleResult() != null;
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		        return false;
+		    }
+	}
 	
 	 public User findUserByName(String userName) {
 	     TypedQuery<User> query = em.createNamedQuery("findUserByName", User.class)

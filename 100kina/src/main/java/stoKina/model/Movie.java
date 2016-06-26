@@ -18,8 +18,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "findByTitle", query = "SELECT m FROM Movie m WHERE m.title = :title"),
-		@NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m ")})
+@NamedQueries({ @NamedQuery(name = "findByTitle", query = "SELECT m FROM Movie m WHERE m.title =:title"),
+		@NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m "),
+		@NamedQuery(name = "getMovieByImageTitle", query = "Select m from Movie m WHERE m.imageTitle =:imageTitle")})
 public class Movie implements Serializable {
 
 	private static final long serialVersionUID = -7936362793263897507L;
@@ -32,6 +33,8 @@ public class Movie implements Serializable {
 	@Basic(fetch = FetchType.LAZY)
     private byte[] image;
 	
+	private String imageTitle;
+	
 	@OneToMany
 	private List<User> users;
 	
@@ -43,9 +46,10 @@ public class Movie implements Serializable {
 		users = new ArrayList<>();
 	}
 	
-	public Movie(String title, byte[] image) {
+	public Movie(String title, byte[] image, String imageTitle) {
 		this.title = title;
 		this.image = image;
+		this.imageTitle = imageTitle;
 		users = new ArrayList<>();
 	}
 	public String getTitle() {
@@ -70,10 +74,12 @@ public class Movie implements Serializable {
 	public byte[] getImage() {
 			return image;
 		}
-	
-		public void setImage(byte[] image) {
-			this.image = image;
-		}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	public String getImageTitle() {
+		return imageTitle;
+	}
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

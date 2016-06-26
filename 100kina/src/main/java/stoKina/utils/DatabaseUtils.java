@@ -26,13 +26,13 @@ public class DatabaseUtils {
 	            new User("100kila", "kilatamaika", "kilata@abv.bg")};
 
 	    private static Movie[] MOVIES = {
-	            new Movie("Star wars: The Phantom Menance", writeImage("/100kina/src/main/webapp/images/tpm")),
-	            new Movie("Star wars: Attack of The Clones",writeImage("/100kina/src/main/webapp/images/atc")),
-	            new Movie("Star wars: Revenge of The Sith", writeImage("/100kina/src/main/webapp/images/rts")),
-	            new Movie("Star wars: A New Hope", writeImage("/100kina/src/main/webapp/images/nh")),
-	            new Movie("Star wars: The Empire Strikes Back", writeImage("/100kina/src/main/webapp/images/tesb")),
-	            new Movie("Star wars: Return of The Jedi", writeImage("/100kina/src/main/webapp/images/rtj")),
-	            new Movie("Star wars: The Force Awakens", writeImage("/100kina/src/main/webapp/images/tfa"))};
+	            new Movie("Star wars: The Phantom Menance", writeImage("/100kina/src/main/webapp/images/tpm"), "tpm"),
+	            new Movie("Star wars: Attack of The Clones",writeImage("/100kina/src/main/webapp/images/atc"), "atc"),
+	            new Movie("Star wars: Revenge of The Sith", writeImage("/100kina/src/main/webapp/images/rts"), "rts"),
+	            new Movie("Star wars: A New Hope", writeImage("/100kina/src/main/webapp/images/nh"), "nh"),
+	            new Movie("Star wars: The Empire Strikes Back", writeImage("/100kina/src/main/webapp/images/tesb"), "tesb"),
+	            new Movie("Star wars: Return of The Jedi", writeImage("/100kina/src/main/webapp/images/rtj"), "rtj"),
+	            new Movie("Star wars: The Force Awakens", writeImage("/100kina/src/main/webapp/images/tfa"), "tfa")};
 
 	    @PersistenceContext
 	    private EntityManager em;
@@ -67,8 +67,8 @@ public class DatabaseUtils {
 	            movieDAO.addMovie(movie);
 	        }
 	    }
-	    private static byte[] writeImage (String ImageName) {
-	    	File fi = new File(ImageName);
+	    private static byte[] writeImage (String imageFile) {
+	    	File fi = new File(imageFile);
 	    	try {
 				return Files.readAllBytes(fi.toPath());
 			} catch (IOException e) {

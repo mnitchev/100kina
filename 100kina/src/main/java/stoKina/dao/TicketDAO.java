@@ -1,6 +1,8 @@
 package stoKina.dao;
 
 
+import java.util.Collection;
+
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +21,10 @@ public class TicketDAO {
     
     public void addTicket(Ticket ticket) {
     	em.persist(ticket);
+    }
+    public Collection<Ticket> getTicketByMovieTitle(String movieTitle){
+    	return em.createNamedQuery("getTicketByMovieTitle", Ticket.class).
+    			setParameter("movieTitle", movieTitle).getResultList();
     }
     
 	/*public void addTicket(int seatNumber, String movieTitle, Date timeOfEntry) {

@@ -66,5 +66,9 @@ public class MovieDAO {
 	public Movie findById(long key) {
         return em.find(Movie.class, key);
 	}
+	
+	public Movie getMovieByImageTitle(String imageTitle) {
+		return em.createNamedQuery("getMovieByImageTitle", Movie.class).setParameter("imageTitle", imageTitle).getSingleResult();
+	}
     
 }
