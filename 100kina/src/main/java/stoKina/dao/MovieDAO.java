@@ -58,7 +58,7 @@ public class MovieDAO {
         user.getPaidTickets().add(ticket);
         movieToReserve.getUsers().add(user);
     }
-
+    
     public Collection<Movie> getAllMovies() {
         return em.createNamedQuery("getAllMovies", Movie.class).getResultList();
     }

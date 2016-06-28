@@ -1,23 +1,23 @@
 package stoKina.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
-import stoKina.dao.UserDAO;
-import stoKina.model.Movie;
 import stoKina.model.Ticket;
 
-
+@Singleton
+@EJB
 public class TicketMaster {
 	
-	private static ConcurrentHashMap<Long, List<Ticket>> reservedTickets = new ConcurrentHashMap<Long, List<Ticket>>();
+	private ConcurrentHashMap<Long, List<Ticket>> reservedTickets = new ConcurrentHashMap<Long, List<Ticket>>();
 	
 	@Inject
 	private TicketDAO ticketDAO;
@@ -27,43 +27,48 @@ public class TicketMaster {
 	
 	public boolean isTicketReserved(Ticket ticket)
 	{
-		List<Ticket> value = reservedTickets.get(movieDAO.findByTitle(ticket.getMovieTitle()));
+		List<Ticket> value = reservedTickets.get(movieDAO.findById(ticket.getMovieId()));
 		boolean hasTicket = value.contains(ticket);
 		return hasTicket;
 	}
 	
 	public boolean isTicketFree(Ticket ticket){
-		// da se proveri dali ima bilet v bd
-		// kak da vidq dali bileta go ima v bd ?
-		Collection<Ticket> movieTickets = ticketDAO.getTicketByMovieTitle(ticket.getMovieTitle());
-		boolean isTicketInDB = movieTickets.contains(ticket);
-		return !(isTicketReserved(ticket) && isTicketInDB);
+		/*Ticket movieTicket = ticketDAO.getAllTicketsByMvoieId(ticket.getMovieId(), ticket.getSeatNumber());
+		if (movieTicket == null) {
+			return true;
+		}*/
+		return !(isTicketReserved(ticket));
 	}
 	
-	public void reserveTicket(Ticket ticket){
+	public boolean reserveTicket(Ticket ticket){
 		if(isTicketFree(ticket)){
-			List<Ticket> listToAdd = reservedTickets.get(movieDAO.findByTitle(ticket.getMovieTitle()));
+			List<Ticket> listToAdd = reservedTickets.get(movieDAO.findById(ticket.getMovieId()));
 			listToAdd.add(ticket);
-			reservedTickets.put(movieDAO.findByTitle(ticket.getMovieTitle()).getId(),listToAdd);
+			reservedTickets.put(movieDAO.findById(ticket.getMovieId()).getId(),listToAdd);
 			//start na nishkata
 			Thread countDown = new CountDownThread(ticket, this);
 			countDown.start();
+			return true;
 		}
 		else{
-			//return response ?? 
+			return false;
 		}
 	}
 
 	public void removeTicket(Ticket reservedTicket) {
-		List<Ticket> value = reservedTickets.get(movieDAO.findByTitle(reservedTicket.getMovieTitle()));
+		List<Ticket> value = reservedTickets.get(movieDAO.findById(reservedTicket.getMovieId()));
 		boolean hasTicket = value.contains(reservedTicket);
 		if(hasTicket){
 			//remove ticket from list
-			reservedTickets.get(movieDAO.findByTitle(reservedTicket.getMovieTitle())).remove(reservedTicket);
+			reservedTickets.get(movieDAO.findById(reservedTicket.getMovieId())).remove(reservedTicket);
 		}
 	}
-	
-	
-	
-	
+
+	/*public Collection<Ticket> getReservedTicketsByMovieId(Long movieId) {
+		Collection<Ticket> ticketList = new ArrayList<>();
+		for (Ticket ticket : reservedTickets.values()) {
+			//TO BE CONTINUED
+		}
+		return reservedTickets.values();
+	}*/
 }

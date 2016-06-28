@@ -4,7 +4,7 @@ import stoKina.model.Ticket;
 
 
 public class CountDownThread extends Thread{
-	public static final int millsToSleep = 2000;
+	public static final int millsToSleep = 600000;
 	
 	private Ticket reservedTicket;
 	
@@ -21,8 +21,7 @@ public class CountDownThread extends Thread{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		if(tm.isTicketReserved(this.reservedTicket)){
-			//remove
+		if(tm.isTicketReserved(this.reservedTicket)) {
 			tm.removeTicket(this.reservedTicket);
 		}
 	}

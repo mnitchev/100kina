@@ -21,6 +21,9 @@ public class TicketManager {
 	@Inject
 	private TicketDAO ticketDAO;
 	
+	@Inject
+	private TicketMaster ticketMaster;
+	
 	@GET
 	@Path("{ticketId}")
 	@Produces("aplication/json")
@@ -29,9 +32,19 @@ public class TicketManager {
 	}
 	
 	@GET
-	@Produces
-	public Collection<Ticket> getAllTickets() {
-		return ticketDAO.getAllTickets();
+	@Path("getAllTickets")
+	@Produces("application/json")
+	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieId") String movieId) {
+		return ticketDAO.getAllTicketsByMvoieId(Long.parseLong(movieId));
+	}
+	
+	@GET
+	@Path("getReservedTickets")
+	@Produces("application/json")
+	public Collection<Ticket> getAllReservedTicketsForMovie(@PathParam("movieId") String movieId) {
+		return null;
+		//TODO: finish
+		//return ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
 	}
 	
 	@POST
