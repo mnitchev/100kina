@@ -40,7 +40,7 @@ public class UserDAO {
 	}
 	
 	 public User findUserByName(String userName) {
-	     TypedQuery<User> query = em.createNamedQuery("findUserByName", User.class)
+	     TypedQuery<User> query = em.createNamedQuery("findByName", User.class)
 	    		 .setParameter("userName", userName);
 	     try {
 	            return query.getSingleResult();

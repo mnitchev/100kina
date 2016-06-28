@@ -43,7 +43,10 @@
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify(userData),
                 statusCode: {
-                    401: reset(),
+                    401: function() {
+			        	alert("Authentication failed");
+			        	$( "#reset_login" ).trigger( "click" );
+			          },
                     200: function () {
                         window.location.replace("index.html");
                     }

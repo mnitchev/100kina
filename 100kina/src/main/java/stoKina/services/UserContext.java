@@ -8,7 +8,7 @@ public class UserContext implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5185469629320384569L;
 	
 	private User currentUser;
 	
