@@ -39,4 +39,5 @@ public class TicketManager {
 	public void addTicket(Ticket ticket){
 		ticketDAO.addTicket(ticket);
 	}
+
 }

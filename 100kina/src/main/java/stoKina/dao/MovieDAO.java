@@ -23,8 +23,8 @@ public class MovieDAO {
 	            em.persist(movie);
 	        }
 	}
-	
-	private Movie findByTitle(String title) {
+	//popravil na public
+	public Movie findByTitle(String title) {
 	        TypedQuery<Movie> query = em
 	                .createNamedQuery("findByTitle", Movie.class)
 	                .setParameter("title", title);
