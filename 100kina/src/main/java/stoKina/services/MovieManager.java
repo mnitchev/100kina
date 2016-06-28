@@ -30,7 +30,8 @@ public class MovieManager {
 	private TicketDAO ticketDAO;
 	
 	@GET
-	@Produces
+	@Path("getAllMovies")
+	@Produces("application/json")
 	public Collection<Movie> getAllMovies() {
         return movieDAO.getAllMovies();
     }

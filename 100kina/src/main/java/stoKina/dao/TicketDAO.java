@@ -23,13 +23,18 @@ public class TicketDAO {
     	em.persist(ticket);
     }
     
-    public Collection<Ticket> getTicketByMovieTitle(String movieTitle){
+    /*public Collection<Ticket> getTicketByMovieTitle(String movieTitle){
     	return em.createNamedQuery("getTicketByMovieTitle", Ticket.class).
     			setParameter("movieTitle", movieTitle).getResultList();
-    }
+    }*/
 
 	public Collection<Ticket> getAllTickets() {
 		return em.createNamedQuery("getAllTickets", Ticket.class).getResultList();
+	}
+
+	public Collection<Ticket> getAllTicketsByMvoieId(long movieId) {
+		return em.createNamedQuery("getTicketsByMovieId", Ticket.class).
+				setParameter("movieId", movieId).getResultList();
 	}
     
 	/*public void addTicket(int seatNumber, String movieTitle, Date timeOfEntry) {

@@ -13,6 +13,7 @@ import stoKina.dao.MovieDAO;
 import stoKina.dao.UserDAO;
 import stoKina.model.Movie;
 import stoKina.model.User;
+import stoKina.services.TicketMaster;
 
 @Stateless
 public class DatabaseUtils {
@@ -42,6 +43,9 @@ public class DatabaseUtils {
 	    
 	    @EJB
 	    private UserDAO userDAO;
+	    
+	    @EJB
+	    private TicketMaster ticketMaster;
 	    
 	    
 	    public void addTestDataToDB() {
