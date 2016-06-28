@@ -3,16 +3,14 @@ package stoKina.services;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
 import stoKina.model.Ticket;
 
 @Singleton
-@EJB
 public class TicketMaster {
 	
 	private ConcurrentHashMap<Long, List<Ticket>> reservedTickets = new ConcurrentHashMap<Long, List<Ticket>>();

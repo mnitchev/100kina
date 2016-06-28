@@ -19,8 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "findByTitle", query = "SELECT m FROM Movie m WHERE m.title =:title"),
-		@NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m "),
-		@NamedQuery(name = "getMovieByImageTitle", query = "Select m from Movie m WHERE m.imageTitle =:imageTitle")})
+		@NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m ")})
 public class Movie implements Serializable {
 
 	private static final long serialVersionUID = -7936362793263897507L;
@@ -29,7 +28,6 @@ public class Movie implements Serializable {
 	private Long id;
 	private String title;
 	
-	private String imageTitle;
 	
 	@OneToMany
 	private List<User> users;
@@ -42,11 +40,6 @@ public class Movie implements Serializable {
 		users = new ArrayList<>();
 	}
 	
-	public Movie(String title, String imageTitle) {
-		this.title = title;
-		this.imageTitle = imageTitle;
-		users = new ArrayList<>();
-	}
 	public String getTitle() {
 		return title;
 	}
@@ -66,9 +59,7 @@ public class Movie implements Serializable {
 	public Long getId() {
 		return id;
 	}
-	public String getImageTitle() {
-		return imageTitle;
-	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

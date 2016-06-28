@@ -16,10 +16,10 @@ public class MovieDAO {
     private EntityManager em;
     
 	public void addMovie(Movie movie) {
-		 Movie foundMovie = findById(movie.getId());
-	        if (foundMovie != null) {
-	            em.persist(movie);
-	        }
+		 //Movie foundMovie = findById(movie.getId());
+	      //  if (foundMovie != null) {
+	      em.persist(movie);
+	        //}
 	}
 	
 	/*//popravil na public
