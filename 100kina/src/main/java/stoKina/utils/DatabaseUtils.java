@@ -1,5 +1,11 @@
 package stoKina.utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -8,6 +14,7 @@ import stoKina.dao.UserDAO;
 import stoKina.model.Movie;
 import stoKina.model.User;
 
+@Stateless
 public class DatabaseUtils {
 	    
 	    private static User[] USERS = {
@@ -19,20 +26,23 @@ public class DatabaseUtils {
 	            new User("100kila", "kilatamaika", "kilata@abv.bg")};
 
 	    private static Movie[] MOVIES = {
-	            new Movie("Star wars: The Force Awakens"),
-	            new Movie("Star wars: The Force Awakens"),
-	            new Movie("Star wars: The Force Awakens"),
-	            new Movie("Star wars: The Force Awakens"),
-	            new Movie("Star wars: The Force Awakens"),
-	            new Movie("Star wars: The Force Awakens")};
+	            new Movie("Star wars: The Phantom Menance", writeImage("/100kina/src/main/webapp/images/tpm"), "tpm"),
+	            new Movie("Star wars: Attack of The Clones",writeImage("/100kina/src/main/webapp/images/atc"), "atc"),
+	            new Movie("Star wars: Revenge of The Sith", writeImage("/100kina/src/main/webapp/images/rts"), "rts"),
+	            new Movie("Star wars: A New Hope", writeImage("/100kina/src/main/webapp/images/nh"), "nh"),
+	            new Movie("Star wars: The Empire Strikes Back", writeImage("/100kina/src/main/webapp/images/tesb"), "tesb"),
+	            new Movie("Star wars: Return of The Jedi", writeImage("/100kina/src/main/webapp/images/rtj"), "rtj"),
+	            new Movie("Star wars: The Force Awakens", writeImage("/100kina/src/main/webapp/images/tfa"), "tfa")};
 
 	    @PersistenceContext
 	    private EntityManager em;
 
-	    
+	    @EJB
 	    private MovieDAO movieDAO;
 	    
+	    @EJB
 	    private UserDAO userDAO;
+	    
 	    
 	    public void addTestDataToDB() {
 	        deleteData();
@@ -48,7 +58,7 @@ public class DatabaseUtils {
 
 	    private void addTestUsers() {
 	        for (User user : USERS) {
-	            userDAO.addUser(user);
+	        	userDAO.addUser(user);
 	        }
 	    }
 
@@ -56,5 +66,13 @@ public class DatabaseUtils {
 	        for (Movie movie : MOVIES) {
 	            movieDAO.addMovie(movie);
 	        }
+	    }
+	    private static byte[] writeImage (String imageFile) {
+	    	File fi = new File(imageFile);
+	    	try {
+				return Files.readAllBytes(fi.toPath());
+			} catch (IOException e) {
+		    	return new byte[10];
+			}
 	    }
 }

@@ -1,4 +1,4 @@
-	package stoKina.model;
+package stoKina.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -33,7 +33,6 @@ public class User implements Serializable{
 	private String userName;
 	private String password;
 	private String email;
-	
 	private String role;
 
     @OneToMany
@@ -48,6 +47,14 @@ public class User implements Serializable{
         this.email = email;
         this.role = USER;
     }
+    
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+        this.email = "";
+        this.role = USER;
+    }
+    
     public User(String userName, String password, String email, String role) {
         this.userName = userName;
         this.password = password;

@@ -13,8 +13,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import stoKina.dao.MovieDAO;
+import stoKina.dao.TicketDAO;
 import stoKina.model.Movie;
-import stoKina.model.Seat;
 
 @Stateless
 @Path("movie")
@@ -27,7 +27,7 @@ public class MovieManager {
 	private UserContext userContext;
 	
 	@Inject
-	private Seat seat;
+	private TicketDAO ticketDAO;
 	
 	@GET
 	@Produces
@@ -44,10 +44,10 @@ public class MovieManager {
 
     @PUT
     @Path("/buyTicket")
-    public Response buyTicketForMovie(@QueryParam("movieId") String movieId) {
+    public Response buyTicketForMovie(@QueryParam("movieId") String movieId, @QueryParam("ticketId") String ticketId) {
         Movie movieToReserve = movieDAO.findById(Long.parseLong(movieId));
         if (movieToReserve != null) {
-            movieDAO.buyTicket(movieToReserve, userContext.getCurrentUser(), seat);
+            movieDAO.buyTicket(movieToReserve, userContext.getCurrentUser(), ticketDAO.findById(Long.parseLong(ticketId)));
         }
         return Response.noContent().build();
     }
