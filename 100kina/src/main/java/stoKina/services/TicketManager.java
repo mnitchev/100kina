@@ -1,5 +1,7 @@
 package stoKina.services;
 
+import java.util.Collection;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -24,6 +26,12 @@ public class TicketManager {
 	@Produces("aplication/json")
 	public Ticket getTicket(@PathParam("ticketId") String ticketId) {
 		return ticketDAO.findById(Long.parseLong(ticketId));
+	}
+	
+	@GET
+	@Produces
+	public Collection<Ticket> getAllTickets() {
+		return ticketDAO.getAllTickets();
 	}
 	
 	@POST

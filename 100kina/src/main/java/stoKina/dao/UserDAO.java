@@ -18,9 +18,13 @@ public class UserDAO {
     private EntityManager em;
 
     
-	public void addUser(User user) {
+	public boolean addUser(User user) {
+		if (findUserByName(user.getUserName()) != null) {
+			return false;
+		}
 		user.setPassword(getHashedPassword(user.getPassword()));
         em.persist(user);
+        return true;
 	}
 	
 	public boolean validateUserCredentials(String userName, String password) {

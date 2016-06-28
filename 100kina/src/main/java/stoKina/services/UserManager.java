@@ -25,19 +25,39 @@ public class UserManager {
 	@Inject
 	private UserContext context;
 	
-	
+	@Path("secure")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response registerUser(User user){
-		userDAO.addUser(user);
-		context.setCurrentUser(user);
-		return RESPONSE_OK;		
+	public Response registerStaff(User user) {
+		user.setRole(User.STAFF);
+		if (userDAO.addUser(user)) {
+			context.setCurrentUser(user);
+			return RESPONSE_OK;
+		}
+		else {
+			return Response.status(HttpURLConnection.HTTP_NOT_ACCEPTABLE).build();
+		}
+	}
+	
+	
+	@Path("register")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response registerUser(User user) {
+		user.setRole(User.USER);
+		if (userDAO.addUser(user)) {
+			context.setCurrentUser(user);
+			return RESPONSE_OK;
+		}
+		else {
+			return Response.status(HttpURLConnection.HTTP_NOT_ACCEPTABLE).build();
+		}
 	}
 	
 	@Path("login")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response validateUser(User user){
+	public Response validateUser(User user) {
 		if(!userDAO.validateUserCredentials(user.getUserName(), user.getPassword())){
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
@@ -48,7 +68,7 @@ public class UserManager {
 	@Path("authenticated")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
-	public Response isAuthenticated(){
+	public Response isAuthenticated() {
 		if(context.getCurrentUser() == null){
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 		}
@@ -58,8 +78,8 @@ public class UserManager {
 	@Path("current")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
-	public String getUser(){
-		if(context.getCurrentUser() == null){
+	public String getUser() {
+		if(context.getCurrentUser() == null) {
 			return null;
 		}
 		return context.getCurrentUser().getUserName();
@@ -68,7 +88,7 @@ public class UserManager {
 	@Path("logout")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
-	public void logoutUser(){
+	public void logoutUser() {
 		context.setCurrentUser(null);
 	}
 	

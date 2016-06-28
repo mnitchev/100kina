@@ -22,10 +22,15 @@ public class TicketDAO {
     public void addTicket(Ticket ticket) {
     	em.persist(ticket);
     }
+    
     public Collection<Ticket> getTicketByMovieTitle(String movieTitle){
     	return em.createNamedQuery("getTicketByMovieTitle", Ticket.class).
     			setParameter("movieTitle", movieTitle).getResultList();
     }
+
+	public Collection<Ticket> getAllTickets() {
+		return em.createNamedQuery("getAllTickets", Ticket.class).getResultList();
+	}
     
 	/*public void addTicket(int seatNumber, String movieTitle, Date timeOfEntry) {
         em.persist(new Ticket(seatNumber, movieTitle, timeOfEntry));
