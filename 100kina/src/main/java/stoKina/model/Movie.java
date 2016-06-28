@@ -29,10 +29,6 @@ public class Movie implements Serializable {
 	private Long id;
 	private String title;
 	
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-    private byte[] image;
-	
 	private String imageTitle;
 	
 	@OneToMany
@@ -46,9 +42,8 @@ public class Movie implements Serializable {
 		users = new ArrayList<>();
 	}
 	
-	public Movie(String title, byte[] image, String imageTitle) {
+	public Movie(String title, String imageTitle) {
 		this.title = title;
-		this.image = image;
 		this.imageTitle = imageTitle;
 		users = new ArrayList<>();
 	}
@@ -70,12 +65,6 @@ public class Movie implements Serializable {
 
 	public Long getId() {
 		return id;
-	}
-	public byte[] getImage() {
-			return image;
-		}
-	public void setImage(byte[] image) {
-		this.image = image;
 	}
 	public String getImageTitle() {
 		return imageTitle;
