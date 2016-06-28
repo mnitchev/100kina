@@ -5,54 +5,37 @@
     <meta charset="utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script type="text/javascript">
-        function reset() {
-            alert("Authentication failed");
-            $("#reset_data").trigger("click");
-        }
-        var username = "";
-    	function storeUserName(){
-    		username = $("#userName").val();
-    	}
-    	var password = "";
-    	function storePassword(){
-    		password = $("#pwd").val();
-    		
-    	}
-        function login() {
-        	console.log(username);
-    	    console.log(password);
-    	    
-            if (username == "") {
-                return;
-            }
-            if (password == "") {
-                return;
-            }
-
-            var userData = {
-                user: {
-                    userName : username,
-                    password : password
-                }                
-            }
-            $.ajax({
-                url: 'rest/user/login',
-                type: "POST",
-                contentType: "application/json;charset=UTF-8",
-                data: JSON.stringify(userData),
-                statusCode: {
-                    401: function() {
-			        	alert("Authentication failed");
-			        	$( "#reset_login" ).trigger( "click" );
-			          },
-                    200: function () {
-                        window.location.replace("index.html");
-                    }
-                }
-            });
-        }
+    	$(document).ready(function(){
+    		$("#login").click(function(){
+    			var username = $("#userName").val();
+    			var password = $("#pwd").val();
+    			if (username == "" || password == "") {
+    	                return;
+    	        }
+    			var userData = {
+    	                user: {
+    	                    userName : username,
+    	                    password : password
+    	                }            
+    	            }
+    	        $.ajax({
+    	        	type: "POST",
+    	        	contentType: "application/json;charset=UTF-8",
+    	        	url: "rest/user/login",
+    	        	data: JSON.stringify(userData),
+    	        	success: function(data, textStatus, xhr){
+    	        			window.location = "program.html";
+    	        	},
+    	        	error: function(data, textStatus, xhr){
+    	        		alert("Authentication failed");
+                        $("#reset_data").trigger("click");
+    	        	}
+    	        });
+    	        return false;
+    		});
+    	});
     </script>
 </head>
 <body>
@@ -70,7 +53,7 @@
     		<div class="navbar-collapse collapse" id="navbar-main">
     			<ul class="nav navbar-nav">
     				<li>
-    					<a href="http://www.cinemacity.bg/movies">Program</a>
+    					<a href="program.html">Program</a>
     				</li>
     				<li>
     					<a href="login.html">Login</a>
@@ -88,26 +71,31 @@
     <h1 style="text-align:center">
         <b>Login</b>
     </h1>
+    
+    <div class="col-lg-6 col-md-offset-3">
+    		<div class="well bs-component">
     <form class="form-horizontal" id="login_form" method="post">
     <fieldset>
        <div class="form-group">
          <label for="userName" class="col-lg-3 control-label col-md-offset-1">User name</label>
             <div class="col-lg-7">
-            	<input type="text" onchange="storeUserName()" class="form-control" id="userName" required="required" placeholder="User name" value="" />
+            	<input type="text" class="form-control" id="userName" required="required" placeholder="User name" value="" />
         	</div>
        </div>
         <div class="form-group">
             <label for="password" class="col-lg-3 control-label col-md-offset-1">Password</label>
             <div class="col-lg-7">
-            	<input type="password" onchange="storePassword()" class="form-control" id="pwd" required="required" placeholder="Password" value="" />
+            	<input type="password" class="form-control" id="pwd" required="required" placeholder="Password" value="" />
         	</div>
         </div>
          <div class="col-lg-7 col-lg-offset-4">
         	<button type="reset" class="btn btn-default" id="reset_data">Reset</button>
-        	<button type="submit" onclick="login()" class="btn btn-default">Login</button>
+        	<button type="submit" id="login" class="btn btn-default">Login</button>
        	</div>
     </fieldset>
     </form>
+	</div>
+	</div>
 	
 </body>
 </html>

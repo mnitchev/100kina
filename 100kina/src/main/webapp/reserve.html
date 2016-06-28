@@ -5,8 +5,7 @@
     <meta charset="utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 </head>
 <body>
 
@@ -34,11 +33,11 @@
 	
 	$(document).ready(function produceSeats(){
 		$.ajax({
-			url: " ",
+			url: "",
 			type: "GET",
-			success: function(seats){
-				//for(var i in seats){
-				//	seatList.push(seats[i]);
+			success: function(movies){
+				//for(var i in movies){
+				//	seatList.push(movies[i]);
 				//}
 			}
 		});
@@ -51,16 +50,18 @@
 		$("#SeatsContainer").html(htmlCollector);
 	});
 	
-	
+	$("#SeatsContainer a").click(function(event){
+		event.preventDefault();
+	});
 	
 	function getButtonHtml(){
 		var buttonHtml = "";
 		for(var i = 1; i <= 20; i++){
 			if(seatList.includes(i)){
-				buttonHtml += "<a href=\"#\" id=\"B" + i + "\" class=\"btn btn-danger disabled\">" + i + "</a>";
+				buttonHtml += "<span id=\"B" + i + "\" class=\"btn btn-danger disabled\">" + i + "</span>";
 			}
 			else{
-				buttonHtml += "<a href=\"#\" id=\"B" + i + "\" class=\"btn btn-default\">" + i + "</a>";
+				buttonHtml += "<span id=\"B" + i + "\" class=\"btn btn-default\">" + i + "</span>";
 			}
 			
 			if(i % 5 == 0 && i < 20)
@@ -78,7 +79,7 @@
 				}
 				else{
 					if($(this).hasClass("btn-success")){
-						$(this).replaceWith("<a href=\"#\" class=\"btn btn-default\">" + $(this).text() + "</a>");
+						$(this).replaceWith("<span class=\"btn btn-default\">" + $(this).text() + "</span>");
 						var index = selectedSeatsList.indexOf($(this).text());
 						selectedSeatsList.splice(index, 1);
 						selectedSeats--;
@@ -88,7 +89,7 @@
 							alert("You already selected " + numberOfTickets + "seat(s)!");
 							location.reload();
 						}
-						$(this).replaceWith("<a href=\"#\" class=\"btn btn-success\">" + $(this).text() + "</a>");
+						$(this).replaceWith("<span class=\"btn btn-success\">" + $(this).text() + "</span>");
 						selectedSeatsList.push($(this).text());
 						selectedSeats++;
 					}
@@ -117,7 +118,7 @@
     		<div class="navbar-collapse collapse" id="navbar-main">
     			<ul class="nav navbar-nav">
     				<li>
-    					<a href="http://www.cinemacity.bg/movies">Program</a>
+    					<a href="program.html">Program</a>
     				</li>
     				<li>
     					<a href="login.html">Login</a>
@@ -129,12 +130,14 @@
     		</div>
     	</div>
     </div>
-
+	
     <div class="row">
+    
     	<div class="col-lg-6 col-md-offset-3">
     		<div class="well bs-component">
     		<form class="form-horizontal">
     		<fieldset>
+    		<h1>Title</h1>
    				<div class="form-group">
 			    <label for="select" class="col-lg-3 control-label">Select number of tickets</label>
 			    <div class="col-lg-8 ">

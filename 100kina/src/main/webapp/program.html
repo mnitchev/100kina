@@ -5,27 +5,29 @@
     <meta charset="utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="styles/movieTheater.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 </head>
 <body>
 	<script>
 	$(document).ready(function(){
 		$.ajax({
-            url : '', //TYPE THE URL
+            url : "MockMovies.json", 
             type : "GET",
-            success : function(movies) {
+            success : function(response) {
+            	response = JSON.parse(response);
+            	
          	   var htmlCollector = "";
-               for(var id in movies){
-            	   htmlCollector += getMovieHTML(movie[id]);
-               }
+               response.movies.forEach(function(movie){
+            	   htmlCollector += getMovieHTML(movie);
+               });
                $("#movieContainer").html(htmlCollector);
             }
         });
 	});
 	
 	function getMovieHTML(movie){
-		return "<p>" + movie.name + "</p>";
+		console.log(movie.title);
+		return '<p> <a href="reserve.html#' + movie.id + '">' + movie.title + "</a></p>";
 	}
 	</script>
 	
@@ -44,7 +46,7 @@
     		<div class="navbar-collapse collapse" id="navbar-main">
     			<ul class="nav navbar-nav">
     				<li>
-    					<a href="http://www.cinemacity.bg/movies">Program</a>
+    					<a href="program.html">Program</a>
     				</li>
     				<li>
     					<a href="login.html">Login</a>

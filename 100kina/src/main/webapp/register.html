@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script type="text/javascript">
     	function reset() {
         	alert("Registration failed!");
@@ -19,39 +19,44 @@
             }
             return true;
         }
-        function register() {
-            var formURL = $("#register_form").attr("action");
-            var username = $("#userName").val();
-            var password = $("#pwd").val();
-            var email = $("#email").val();
-
-            if(!isPasswordValid(password)){
-            	alert("Passwords must match!");
-                return;
-            }
-
-            var userData = {
-                user: {
-                    userName: username,
-                    password: password,
-                    email: email
+        
+        $(document).ready(function(){
+    		$("#register").click(function(){
+    			var username = $("#userName").val();
+                var password = $("#pwd").val();
+                var email = $("#email").val();
+                
+    			if (username == "" || password == "" || email == "") {
+    	                return;
+    	        }
+    			if(!isPasswordValid(password)){
+                	alert("Passwords must match!");
+                    return;
                 }
-            }
-            $.ajax({
-                url: 'rest/user',
-                type: "POST",
-                contentType: "application/json;charset=UTF-8",
-                data: JSON.stringify(userData),
-           		statusCode: {
-                    200: function () {
-                    	alert("Success!");
-                    	window.location.replace("login.html");
-                       
-                    }
-                }
-            });
-        }
-
+    			
+    			var userData = {
+    	                user: {
+    	                    userName : username,
+    	                    password : password,
+    	                    email: email
+    	                }            
+    	            }
+    	        $.ajax({
+    	        	type: "POST",
+    	        	contentType: "application/json;charset=UTF-8",
+    	        	url: "rest/user/register",
+    	        	data: JSON.stringify(userData),
+    	        	success: function(data, textStatus, xhr){
+    	        			window.location = "program.html";
+    	        	},
+    	        	error: function(data, textStatus, xhr){
+    	        		alert("Registration failed");
+                        $("#reset_data").trigger("click");
+    	        	}
+    	        });
+    	        return false;
+    		});
+    	});
     </script>
 </head>
 <body>
@@ -69,7 +74,7 @@
     		<div class="navbar-collapse collapse" id="navbar-main">
     			<ul class="nav navbar-nav">
     				<li>
-    					<a href="http://www.cinemacity.bg/movies">Program</a>
+    					<a href="program.html">Program</a>
     				</li>
     				<li>
     					<a href="login.html">Login</a>
@@ -85,8 +90,9 @@
     <h1 align="center">
         <b>Register</b>
     </h1>
-
-    <form class="form-horizontal" method="post" id="register_form" role="form">
+<div class="col-lg-6 col-md-offset-3">
+    		<div class="well bs-component">
+    <form class="form-horizontal" method="post" id="register_form">
     <fieldset>
         <div class="form-group">
             <label for="userName" class="col-lg-3 control-label col-md-offset-1">User name</label>
@@ -115,11 +121,12 @@
         <div class="form-group">
      	 <div class="col-lg-7 col-lg-offset-4">
         	<button type="reset" class="btn btn-default" id="reset_data">Reset</button>
-        	<button type="submit" onclick="register()" class="btn btn-default">Register</button>
+        	<button type="submit" id="register" class="btn btn-default">Register</button>
        	</div>
        	</div>
     </fieldset>
     </form>
-    
+    </div>
+    </div>
 </body>
 </html>
