@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
 import stoKina.model.Movie;
+import stoKina.model.Ticket;
 
 @Stateless
 @Path("movie")
@@ -42,13 +43,30 @@ public class MovieManager {
     public Movie getMovie(@PathParam("movieId") String movieId) {
         return movieDAO.findById(Long.parseLong(movieId));
     }
+    
+    @GET
+	@Path("getTicketsForMovie")
+	@Produces("application/json")
+	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieId") String movieId) {
+		return ticketDAO.getAllTicketsByMvoieId(Long.parseLong(movieId));
+	}
+    
+    /*@GET
+	@Path("getReservedTickets")
+	@Produces("application/json")
+	public Collection<Ticket> getAllReservedTicketsForMovie(@PathParam("movieId") String movieId) {
+		return null;
+		//TODO: finish
+		//return ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
+	}*/
 
     @PUT
     @Path("/buyTicket")
-    public Response buyTicketForMovie(@QueryParam("movieId") String movieId, @QueryParam("ticketId") String ticketId) {
+    public Response buyTicketForMovie(@QueryParam("movieId") String movieId, String seatNumbers) {
         Movie movieToReserve = movieDAO.findById(Long.parseLong(movieId));
         if (movieToReserve != null) {
-            movieDAO.buyTicket(movieToReserve, userContext.getCurrentUser(), ticketDAO.findById(Long.parseLong(ticketId)));
+            //movieDAO.buyTicket(movieToReserve, userContext.getCurrentUser(), ticketDAO.findById(Long.parseLong(ticketId)));
+        	//TODO:
         }
         return Response.noContent().build();
     }

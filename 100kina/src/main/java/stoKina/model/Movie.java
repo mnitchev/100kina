@@ -13,6 +13,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "findByTitle", query = "SELECT m FROM Movie m WHERE m.title =:title"),
@@ -26,6 +28,7 @@ public class Movie implements Serializable {
 	private String title;
 	
 	@OneToMany
+	@JsonIgnore
 	private List<Ticket> paidTickets = new ArrayList<>();
 	
 	public Movie() {
@@ -47,7 +50,6 @@ public class Movie implements Serializable {
 		return id;
 	}
 	
-
 	public List<Ticket> getPaidTickets() {
 		return paidTickets;
 	}
