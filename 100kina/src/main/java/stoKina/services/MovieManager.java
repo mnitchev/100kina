@@ -1,5 +1,6 @@
 package stoKina.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Stateless;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
 import stoKina.model.Movie;
+import stoKina.model.SimpleMovie;
 import stoKina.model.Ticket;
 
 @Stateless
@@ -33,8 +35,14 @@ public class MovieManager {
 	@GET
 	@Path("getAllMovies")
 	@Produces("application/json")
-	public Collection<Movie> getAllMovies() {
-        return movieDAO.getAllMovies();
+	public Collection<SimpleMovie> getAllMovies() {
+        Collection<Movie> queryResult =  movieDAO.getAllMovies();
+        Collection<SimpleMovie> simpleResult = new ArrayList<>();
+        for(Movie movie : queryResult){
+        	simpleResult.add(new SimpleMovie(movie));
+        }
+        
+        return simpleResult;
     }
 
     @GET

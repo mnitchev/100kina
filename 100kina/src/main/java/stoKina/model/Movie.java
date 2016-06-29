@@ -13,7 +13,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @XmlRootElement
@@ -28,7 +27,6 @@ public class Movie implements Serializable {
 	private String title;
 	
 	@OneToMany
-	@JsonIgnore
 	private List<Ticket> paidTickets = new ArrayList<>();
 	
 	public Movie() {
