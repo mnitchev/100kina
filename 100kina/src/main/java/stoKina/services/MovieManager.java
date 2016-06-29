@@ -39,6 +39,7 @@ public class MovieManager {
         Collection<Movie> queryResult =  movieDAO.getAllMovies();
         Collection<SimpleMovie> simpleResult = new ArrayList<>();
         for(Movie movie : queryResult){
+        	
         	simpleResult.add(new SimpleMovie(movie));
         }
         
