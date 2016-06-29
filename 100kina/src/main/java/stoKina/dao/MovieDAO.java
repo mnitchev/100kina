@@ -4,13 +4,10 @@ import java.util.Collection;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import stoKina.model.User;
 import stoKina.model.Movie;
-import stoKina.model.Ticket;
 
 @Singleton
 public class MovieDAO {
@@ -30,25 +27,7 @@ public class MovieDAO {
 	        
 	            return query.getSingleResult();
 	}
-	
-//	private Movie findById(long id) {
-//		TypedQuery<Movie> query = em
-//				.createNamedQuery("findById", Movie.class)
-//				.setParameter("movieId", id);
-//		try {
-//			return query.getSingleResult();
-//		} catch (NoResultException e) {
-//			return null;
-//		}
-//	}
 
-//    public void buyTicket(String userName, Integer seatNumber, String movieTitle, Date timeOfEntry) {
-//        new TicketDAO().addTicket(seatNumber, movieTitle, timeOfEntry);
-//        Movie foundMovie = findByTitle(movieTitle);
-//        User foundUser = new UserDAO().findUserByName(userName);
-//        foundUser.getPaidTickets().add(new Ticket(seatNumber, movieTitle, timeOfEntry));
-//        foundMovie.getUsers().add(foundUser);
-//    }
     /*
     public void buyTicket(Movie movieToReserve, User user, Ticket ticket) {
         user.getPaidTickets().add(ticket);

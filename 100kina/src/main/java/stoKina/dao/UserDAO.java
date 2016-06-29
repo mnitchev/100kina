@@ -1,14 +1,12 @@
 package stoKina.dao;
 
 
-import javax.transaction.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 
 import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;

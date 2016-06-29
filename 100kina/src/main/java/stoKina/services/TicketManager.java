@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
@@ -44,8 +45,14 @@ public class TicketManager {
 	@Path("getAllTicketsForMovie")
 	@Produces("application/json")
 	public Collection<Ticket> getAllTicketsForMovie(@QueryParam("movieTitle") String movieTitle) {
-		System.out.println(movieTitle);
 		return ticketDAO.getAllTicketsByMovieTitle(movieTitle);
+	}
+	
+	@GET
+	@Path("getAllTicketsForUser")
+	@Produces("application/json")
+	public Collection<Ticket> getAllTicketsForUser() {
+		return ticketDAO.getAllTicketsByUserId(context.getCurrentUser().getId());
 	}
 	
 	@GET
@@ -66,12 +73,20 @@ public class TicketManager {
 	@Path("buy")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void buyTickets(Collection<Ticket> tickets, @PathParam("movieTitle") String movieTitle){
+	public Response buyTickets(Collection<Ticket> tickets, @PathParam("movieTitle") String movieTitle){
+		for (Ticket ticket : tickets) {
+			if (!ticketDAO.isFree(ticket)) {
+				return Response.notAcceptable(null).build();
+			}
+		}
+		
 		for(Ticket ticket : tickets){
 			ticket.setOwner(context.getCurrentUser());
 			ticket.setMovie(movieDAO.findByTitle(movieTitle));
 			ticketDAO.addTicket(ticket);
 		}
+		
+		return Response.ok().build();
 	}
 
 }
