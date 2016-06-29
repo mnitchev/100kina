@@ -27,7 +27,7 @@ public class TicketDAO {
 		return em.createNamedQuery("getAllTickets", Ticket.class).getResultList();
 	}
 
-	public Collection<Ticket> getAllTicketsByMvoieTitle(String movieTitle) {
+	public Collection<Ticket> getAllTicketsByMovieTitle(String movieTitle) {
 		return em.createNamedQuery("getTicketsByMovieTitle", Ticket.class).
 				setParameter("movieTitle", movieTitle).getResultList();
 	}

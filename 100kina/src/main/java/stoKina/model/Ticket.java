@@ -13,6 +13,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonTypeId;
+
 @Entity
 @XmlRootElement
 @NamedQueries({
@@ -24,6 +26,7 @@ public class Ticket implements Serializable{
 	private static final long serialVersionUID = 3073280968997835124L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonTypeId
 	private Long id;
 	private Integer seatNumber;
 	

@@ -36,7 +36,7 @@ public class TicketManager {
 	@Path("getTicketsForMovie")
 	@Produces("application/json")
 	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieTitle") String movieTitle) {
-		return ticketDAO.getAllTicketsByMvoieTitle(movieTitle);
+		return ticketDAO.getAllTicketsByMovieTitle(movieTitle);
 	}
 	
 	@GET
@@ -45,7 +45,7 @@ public class TicketManager {
 	public Collection<Ticket> getAllReservedTicketsForMovie(@PathParam("movieId") String movieId) {
 		return null;
 		//TODO: finish
-		//return ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
+		//return .!.. ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
 	}
 	
 	@POST
