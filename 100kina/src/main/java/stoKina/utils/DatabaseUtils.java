@@ -6,8 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import stoKina.dao.MovieDAO;
+import stoKina.dao.TicketDAO;
 import stoKina.dao.UserDAO;
 import stoKina.model.Movie;
+import stoKina.model.Ticket;
 import stoKina.model.User;
 import stoKina.services.TicketMaster;
 
@@ -39,6 +41,9 @@ public class DatabaseUtils {
 	    
 	    @EJB
 	    private UserDAO userDAO;
+
+	    @EJB
+	    private TicketDAO ticketDAO;
 	    
 	    @EJB
 	    private TicketMaster ticketMaster;
