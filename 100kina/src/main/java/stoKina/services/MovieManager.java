@@ -1,6 +1,7 @@
 package stoKina.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.ejb.Stateless;
@@ -35,15 +36,17 @@ public class MovieManager {
 	@GET
 	@Path("getAllMovies")
 	@Produces("application/json")
-	public Collection<SimpleMovie> getAllMovies() {
-        Collection<Movie> queryResult =  movieDAO.getAllMovies();
-        Collection<SimpleMovie> simpleResult = new ArrayList<>();
-        for(Movie movie : queryResult){
-        	
-        	simpleResult.add(new SimpleMovie(movie));
-        }
-        
-        return simpleResult;
+	public Collection<Movie> getAllMovies() {
+//        Collection<Movie> queryResult =  movieDAO.getAllMovies();
+//        Collection<SimpleMovie> simpleResult = new ArrayList<>();
+//        for(Movie movie : queryResult){
+//        	
+//        	simpleResult.add(new SimpleMovie(movie));
+//        }
+      //  JSONArray mJSONArray = new JSONArray(Arrays.asList(simpleResult));
+      //  return simpleResult;
+		Collection<Movie> queryResult = movieDAO.getMovieIdAndTitle();
+		return queryResult;
     }
 
     @GET
