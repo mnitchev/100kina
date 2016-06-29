@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import stoKina.model.Ticket;
 
@@ -30,5 +31,18 @@ public class TicketDAO {
 	public Collection<Ticket> getAllTicketsByMovieTitle(String movieTitle) {
 		return em.createNamedQuery("getTicketsByMovieTitle", Ticket.class).
 				setParameter("movieTitle", movieTitle).getResultList();
+	}
+
+	public Collection<Ticket> getAllTicketsByUserId(Long id) {
+		return em.createNamedQuery("findTicketsByUser", Ticket.class).
+				setParameter("id", id).getResultList();
+	}
+
+	public boolean isFree(Ticket ticket) {
+		TypedQuery<Ticket> query = em.createNamedQuery("findTicket", Ticket.class).
+				setParameter("movieTitle", ticket.getMovieTitle()).
+				setParameter("seatNumber", ticket.getSeatNumber());
+		
+		return query.getSingleResult() != null;
 	}
 }

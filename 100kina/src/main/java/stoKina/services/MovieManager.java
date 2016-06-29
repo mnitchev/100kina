@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -76,7 +76,7 @@ public class MovieManager {
 		//return ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
 	}*/
 
-    @PUT
+    @POST
     @Path("/buyTicket")
     public Response buyTicketForMovie(@QueryParam("movieId") String movieId, String seatNumbers) {
         Movie movieToReserve = movieDAO.findById(Integer.parseInt(movieId));
