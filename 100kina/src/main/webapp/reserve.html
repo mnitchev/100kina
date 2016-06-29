@@ -24,7 +24,7 @@
 <!-- JS  -->
 <script>
 	var numberOfTickets = 0;
-	var seatList = [6, 7, 8, 9];
+	var seatList = [];
 	var selectedSeats = 0;
 	var selectedSeatsList = [];
 	var movieHashCode;
@@ -52,22 +52,26 @@
 			type: "GET",
 			dataType: "json",
 			success: function(data, textStatus, xhr){
-				debugger;
 				
-				for(var i in data){
-					seatList.push(data[i]);
+				
+				data.ticket.forEach(function(ticket){
+					seatList.push(ticket.seatNumber);
+				})
+				for(var j in seatList){
+					console.log(seatList[j]);
 				}
+				$("#title").replaceWith('<h1 style="text-align:center" id="title">' + movieName + '</h1>')
+				var htmlCollector = "";
+				htmlCollector += "<div class=\"btn-toolbar\"><div class=\"btn-group \">";
+				console.log(htmlCollector);
+				htmlCollector += getButtonHtml();
+				htmlCollector += "</div>";
+				$("#SeatsContainer").html(htmlCollector);
 			}
 		});
 		
-		var htmlCollector = "";
-		htmlCollector += "<div class=\"btn-toolbar\"><div class=\"btn-group \">";
-		console.log(htmlCollector);
-		htmlCollector += getButtonHtml();
-		htmlCollector += "</div>";
-		$("#SeatsContainer").html(htmlCollector);
+		
 	});
-	
 	$("#SeatsContainer a").click(function(event){
 		event.preventDefault();
 	});
@@ -76,6 +80,7 @@
 		var buttonHtml = "";
 		for(var i = 1; i <= 20; i++){
 			if(seatList.includes(i)){
+				
 				buttonHtml += "<a href=\"#\" id=\"B" + i + "\" class=\"btn btn-danger disabled\">" + i + "</a>";
 			}
 			else{
@@ -113,6 +118,27 @@
 					}
 				}
 			}
+		else{
+			var order = "{movieTitle: movieName, ["
+			for(var i in selectedSeatsList){
+				order += "{seatNumber: " + selectedSeatsList[i];
+				order += "},"
+			}
+			order += "]}"
+			$.ajax({
+				url: "rest/ticket/buy",
+				type: "POST",
+				contentType: "json",
+				data: JSON.stringify(order),
+				success: function(){
+					window.location = "program.html";
+				},
+				error: function(){
+					alert("Unsuccessful payment");
+					location.reload();
+				}
+			});
+		}
 		for(var i in selectedSeatsList){
 			console.log(selectedSeatsList[i]);
 		}
@@ -159,7 +185,7 @@
     		<div class="well bs-component">
     		<form class="form-horizontal">
     		<fieldset>
-    		<h1>Title</h1>
+    		<h1 id="title"></h1>
    				<div class="form-group">
 			    <label for="select" class="col-lg-3 control-label">Select number of tickets</label>
 			    <div class="col-lg-8 ">
@@ -175,7 +201,8 @@
     			</div>
     			<div style="text-align:center;font-size:150%;"><p class="text-info">Please select seats: </p></div>
     			<div id="SeatsContainer" ></div>
-    			<div class="buy-button-wrapper"><a href="https://www.amazon.com/" id="buy" style="float: none !important;" class="btn btn-info col-lg-2">Buy</a></div>
+    			<br>
+    			<div class="buy-button-wrapper"><span id="buy" style="float: none !important;" class="btn btn-info col-lg-2">Buy</span></div>
   			</fieldset>
 			</form>
    			</div>
