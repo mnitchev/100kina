@@ -13,29 +13,39 @@
 	var panelHeading = '<div class="panel-heading">';
 	var closeDivs = '</div>';
 	var panelBody = '<div class="panel-body">';
-	
+	var userName = "";
 	$(document).ready(function(){
 		$.ajax({
-            url : "MockMovies.json", 
+			url: "rest/user/current",
+			type: "GET",
+			dataType: "text",
+			success: function(user, textStatus, xhr){
+				userName = user;
+				if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#">' + userName + '</a>');
+			},
+		})
+		
+		$.ajax({
+            url : "rest/movie/getAllMovies", 
             type : "GET",
-            contentType: "application/json;charset=UTF-8",
+            accept: "application/json",
+            //contentType: "application/json;charset=UTF-8",
+            //dataType: "json",
             success : function(response) {
-            	response = JSON.parse(response);
-            	
+            	debugger;
          	   	var htmlCollector = "";
-               	response.movies.forEach(function(movie){
+               	response.movie.forEach(function(movie){
             	   htmlCollector += getMovieHTML(movie);
                	});
                	$("#movieContainer").html(htmlCollector);
             }
         });
+		
 	});
 	
 	function getMovieHTML(movie){
-		console.log(movie.id);
 		return moviePanel + panelHeading + movie.title + closeDivs
-			+ panelBody + '<img src="' + movie.image + '" style="position:absolute"  height=120px > \n <br> \n <br> \n <br>'
-			+ '<ul class="pager"><li class="next"><a href="reserve.html#' + movie.id + '">Reserve &rarr;</a></li></ul></div></div>';
+			+ panelBody + '<ul class="pager"><li class="next"><a href="reserve.html#' + movie.title + '">Reserve &rarr;</a></li></ul></div></div>';
 	}
 		
 		
@@ -70,7 +80,11 @@
     					<a href="register.html">Register</a>
     				</li>
     			</ul>
+    			<ul class="nav navbar-nav navbar-right">
+       			<li><div id="currentUser"></div></li>
+     		</ul>
     		</div>
+    		
     	</div>
     </div>
 	
