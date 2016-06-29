@@ -30,12 +30,12 @@ public class TicketManager {
 	
 	@Inject
 	private MovieDAO movieDAO;
-	
-	@Inject
-	private TicketMaster ticketMaster;
-	
+		
 	@Inject
 	private UserContext context;
+	
+	@Inject
+	private TicketOrganizer to;
 	
 	@GET
 	@Path("{ticketId}")
@@ -98,7 +98,7 @@ public class TicketManager {
 		}
 		
 		for (Ticket ticket : tickets) {
-			if (!ticketDAO.isFree(ticket)) {
+			if (!ticketDAO.isFree(ticket) || to.isTicketReseved(movie.getId(),ticket.getSeatNumber())) {
 				return Response.notAcceptable(null).build();
 			}
 		}
@@ -111,5 +111,46 @@ public class TicketManager {
 		
 		return Response.ok().build();
 	}
+	
+	@Path("reserve")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response reserveTickets(@QueryParam("movieTitle") String movieTitle, @QueryParam("ticket1") String ticket1, 
+			@QueryParam("ticket2") String ticket2, @QueryParam("ticket3") String ticket3,
+			@QueryParam("ticket4") String ticket4, @QueryParam("ticket5") String ticket5){
+		Movie movie = movieDAO.findByTitle(movieTitle);
+		List<Ticket> tickets = new ArrayList<>();
+		if(!ticket1.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket1),context.getCurrentUser(), movie));
+		}
+		if(!ticket2.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket2),context.getCurrentUser(), movie));
+		}
+		if(!ticket3.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket3),context.getCurrentUser(), movie));
+		}
+		if(!ticket4.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket4),context.getCurrentUser(), movie));
+		}
+		if(!ticket5.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket5),context.getCurrentUser(), movie));
+		}
+		
+		for (Ticket ticket : tickets) {
+			if (!ticketDAO.isFree(ticket) || to.isTicketReseved(movie.getId(),ticket.getSeatNumber())) {
+				return Response.notAcceptable(null).build();
+			}
+		}
+		
+		for(Ticket ticket : tickets){
+			ticket.setOwner(context.getCurrentUser());
+			ticket.setMovie(movieDAO.findByTitle(movieTitle));
+			to.reserveTicket(movie.getId(), ticket);
+		}
+		
+		return Response.ok().build();
+	}
+	
+	
 
 }
