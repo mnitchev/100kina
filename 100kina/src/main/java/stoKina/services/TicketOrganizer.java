@@ -64,5 +64,4 @@ public class TicketOrganizer {
 		}
 		return reservedTickets.get(movieId);
 	}
-	
 }
