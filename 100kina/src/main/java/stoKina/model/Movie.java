@@ -25,16 +25,14 @@ public class Movie implements Serializable {
 	private Long id;
 	private String title;
 	
-	
 	@OneToMany
-	private List<User> users;
+	private List<Ticket> paidTickets = new ArrayList<>();
 	
 	public Movie() {
 	}
 	
 	public Movie(String title) {
 		this.title = title;
-		users = new ArrayList<>();
 	}
 	
 	public String getTitle() {
@@ -45,16 +43,17 @@ public class Movie implements Serializable {
 		this.title = title;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
 	public Long getId() {
 		return id;
+	}
+	
+
+	public List<Ticket> getPaidTickets() {
+		return paidTickets;
+	}
+
+	public void setPaidTickets(List<Ticket> paidTickets) {
+		this.paidTickets = paidTickets;
 	}
 
 	@Override
@@ -62,10 +61,6 @@ public class Movie implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getTitle());
 		sb.append(" ");
-		for (User u : getUsers()) {
-			sb.append(u.toString());
-			sb.append(" ");
-		}
 		return sb.toString();
 	}
 
