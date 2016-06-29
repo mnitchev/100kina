@@ -4,7 +4,9 @@ import java.util.Collection;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import stoKina.model.User;
 import stoKina.model.Movie;
@@ -22,17 +24,14 @@ public class MovieDAO {
 	        //}
 	}
 	
-	/*//popravil na public
+	
 	public Movie findByTitle(String title) {
 	        TypedQuery<Movie> query = em
 	                .createNamedQuery("findByTitle", Movie.class)
 	                .setParameter("title", title);
-	        try {
+	        
 	            return query.getSingleResult();
-	        } catch (NoResultException e) {
-	            return null;
-	        }
-	}*/
+	}
 	
 //	private Movie findById(long id) {
 //		TypedQuery<Movie> query = em
@@ -70,4 +69,5 @@ public class MovieDAO {
 		return em.createNamedQuery("getMovieIdAndTitle", Movie.class).getResultList();
 	}
     
+	
 }

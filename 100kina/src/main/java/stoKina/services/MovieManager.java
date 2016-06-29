@@ -54,10 +54,10 @@ public class MovieManager {
     }
 
     @GET
-    @Path("{movieId}")
+    @Path("{movieTitle}")
     @Produces("application/json")
-    public Movie getMovie(@PathParam("movieId") String movieId) {
-        return movieDAO.findById(Integer.parseInt(movieId));
+    public Movie getMovie(@PathParam("movieTitle") String movieTitle) {
+        return movieDAO.findByTitle(movieTitle);
     }
     
     @GET
