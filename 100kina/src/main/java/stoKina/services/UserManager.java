@@ -61,6 +61,7 @@ public class UserManager {
 		if(!userDAO.validateUserCredentials(user.getUserName(), user.getPassword())){
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
+		user = userDAO.findByUserName(user.getUserName());
 		context.setCurrentUser(user);
 		return RESPONSE_OK;
 	}

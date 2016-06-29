@@ -9,6 +9,11 @@
 </head>
 <body>
 <script>
+var ticketPanel = '<div class="panel panel-default" style="float:none!important!;margin-left:auto; margin-right:auto; position:relative;  width:40%">';
+var panelHeading = '<div class="panel-heading">';
+var closeDivs = '</div>';
+var panelBody = '<div class="panel-body">';
+var userName = "";
 $(document).ready(function(){
 	$.ajax({
 		url: "rest/user/current",
@@ -18,24 +23,32 @@ $(document).ready(function(){
 			userName = user;
 			if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#">' + userName + '</a>');
 		},
-	})
-	debugger;
+	});
+	
 	$.ajax({
         url : "rest/ticket/getAllTicketsForUser",
         type : "GET",
+        accept: "application/json",
         //contentType: "application/json;charset=UTF-8",
         //dataType: "json",
         success : function(response) { 
-        	debugger;
-     	   	var htmlCollector = "";
-           	response.movie.forEach(function(movie){
-        	   htmlCollector += getMovieHTML(movie);
-           	});
-           	$("#movieContainer").html(htmlCollector);
+         debugger;
+          var htmlCollector = "";
+            response.ticket.forEach(function(ticket){
+            htmlCollector += getTicketHTML(ticket);
+            });
+            console.log(htmlCollector);
+            $("#movieContainer").html(htmlCollector);
         }
     });
-	
+ 
 });
+
+function getTicketHTML(ticket){
+ return ticketPanel + panelHeading + ticket.title + closeDivs;
+  //+ panelBody + '<ul class="pager"><li class="next"><a href="reserve.html#' + movie.title + '">Reserve &rarr;</a></li></ul></div></div>';
+}
+
 </script>
 
 

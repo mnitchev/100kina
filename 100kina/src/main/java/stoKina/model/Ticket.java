@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
@@ -22,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
     @NamedQuery(name = "getTicketsByMovieTitle",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle"),
     @NamedQuery(name = "findTicketsByUser",
-    		query = "SELECT t FROM Ticket t WHERE t.userId=:id"),
+    		query = "SELECT t.movieTitle FROM Ticket t WHERE t.userId=:id"),
     @NamedQuery(name = "findTicket",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle AND t.seatNumber=:seatNumber")})
 public class Ticket implements Serializable{
@@ -31,21 +32,17 @@ public class Ticket implements Serializable{
 	private static final long serialVersionUID = 3073280968997835124L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonTypeId
-	private Long id;
+	private Integer id;
+	
 	private Integer seatNumber;
+	
 	
 	private String movieTitle;
 	
 	private Long userId;
 	
-	/*@ManyToOne
-	private User owner;
-	
-	@ManyToOne
-	private Movie movie;*/
-	
 	@Temporal(TemporalType.DATE)
+	@Transient
     private Date timeOfEntry;
 
 	public Ticket() {
@@ -58,7 +55,7 @@ public class Ticket implements Serializable{
 		this.timeOfEntry = new Date();
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -78,9 +75,18 @@ public class Ticket implements Serializable{
 	public void setTimeOfEntry(Date timeOfEntry) {
 		this.timeOfEntry = timeOfEntry;
 	}
+	
+	
 	@Override
 	public String toString(){
-		return getClass().getSimpleName() + " "+ seatNumber;
+		StringBuilder sb = new StringBuilder();
+			
+		sb.append(getSeatNumber());
+		sb.append(" ");
+		sb.append(getMovieTitle());
+		sb.append(" ");
+		
+		return sb.toString();
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -113,5 +119,13 @@ public class Ticket implements Serializable{
 //	public void setMovieTitle(String movieTitle) {
 //		this.movieTitle = movieTitle;
 //	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 	
 }

@@ -20,6 +20,7 @@ import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
 import stoKina.model.Movie;
 import stoKina.model.Ticket;
+import stoKina.model.User;
 
 @Stateless
 @Path("ticket")
@@ -69,7 +70,10 @@ public class TicketManager {
 	@Path("getAllTicketsForUser")
 	@Produces("application/json")
 	public Collection<Ticket> getAllTicketsForUser() {
-		return ticketDAO.getAllTicketsByUserId(context.getCurrentUser().getId());
+		User user = context.getCurrentUser();
+		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getId());
+		Class what = result.getClass();
+		return result;
 	}
 	
 	@GET
