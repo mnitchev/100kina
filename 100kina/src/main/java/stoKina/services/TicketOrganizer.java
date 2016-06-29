@@ -43,7 +43,7 @@ public class TicketOrganizer {
 			return false;
 		}
 		else {
-			if(this.reservedTickets.contains(movieId))
+			if(this.reservedTickets.containsKey(movieId))
 			{
 				this.reservedTickets.get(movieId).add(ticket);
 				return true;
