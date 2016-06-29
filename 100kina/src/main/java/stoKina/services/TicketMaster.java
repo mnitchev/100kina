@@ -14,6 +14,7 @@ import stoKina.model.Ticket;
 public class TicketMaster {
 	
 	private ConcurrentHashMap<Long, List<Ticket>> reservedTickets = new ConcurrentHashMap<Long, List<Ticket>>();
+	//private ConcurrentHashMap<Long, ConcurrentHashMap<Long, List<Ticket>>> reservedTickets = new ConcurrentHashMap<>();
 	
 	@Inject
 	private TicketDAO ticketDAO;
@@ -23,9 +24,10 @@ public class TicketMaster {
 	
 	public boolean isTicketReserved(Ticket ticket)
 	{
-		List<Ticket> value = reservedTickets.get(movieDAO.findById(ticket.getMovieId()));
-		boolean hasTicket = value.contains(ticket);
-		return hasTicket;
+		return false;
+		//List<Ticket> value = reservedTickets.get(movieDAO.findById(ticket.getMovieId()));// FUCK THIS SHIT!!!
+		//boolean hasTicket = value.contains(ticket);
+		//return hasTicket;
 	}
 	
 	public boolean isTicketFree(Ticket ticket){
