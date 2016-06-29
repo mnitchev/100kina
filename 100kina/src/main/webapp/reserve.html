@@ -26,21 +26,32 @@
 	var numberOfTickets = 0;
 	var seatList = [6, 7, 8, 9];
 	var selectedSeats = 0;
-	var selectedSeatsList = ["adwd"];
+	var selectedSeatsList = [];
 	var movieHashCode;
+	var userName = "";
+	var movieName;
 	function storeTickets(){
 		numberOfTickets = $("#tickets :selected").val();
 	}
 	
 	$(document).ready(function produceSeats(){
 		movieHashCode = location.hash;
-		movieID = movieHashCode.replace("#", "");
-		console.log(movieID);
+		movieName = movieHashCode.replace("#", "");
+		$.ajax({
+			url: "rest/user/current",
+			type: "GET",
+			dataType: "text",
+			success: function(user, textStatus, xhr){
+				userName = user;
+				$("#currentUser").replaceWith('<a id="currentUser" href="#">Logout (' + userName + ')</a>');
+			}
+		})
+		
 		$.ajax({
 			url: "rest/ticket/getTicketsForMovie",
 			type: "GET",
 			contentType: "application/json;charset=UTF-8",
-			data: movieID,
+			data: movieName,
 			success: function(data, textStatus, xhr){
 				debugger;
 				response = JSON.parse(response);
@@ -136,6 +147,10 @@
     					<a href="register.html">Register</a>
     				</li>
     			</ul>
+    			
+    			<ul class="nav navbar-nav navbar-right">
+       				<li><div id="currentUser"></div></li>
+       			</ul>
     		</div>
     	</div>
     </div>
