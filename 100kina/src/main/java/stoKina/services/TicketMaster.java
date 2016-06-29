@@ -40,12 +40,12 @@ public class TicketMaster {
 	
 	public boolean reserveTicket(Ticket ticket){
 		if(isTicketFree(ticket)){
-			List<Ticket> listToAdd = reservedTickets.get(movieDAO.findById(ticket.getMovieId()));
-			listToAdd.add(ticket);
-			reservedTickets.put(movieDAO.findById(ticket.getMovieId()).getId(),listToAdd);
-			//start na nishkata
-			Thread countDown = new CountDownThread(ticket, this);
-			countDown.start();
+//			List<Ticket> listToAdd = reservedTickets.get(movieDAO.findById(ticket.getMovieId()));
+//			listToAdd.add(ticket);
+//			reservedTickets.put(movieDAO.findById(ticket.getMovieId()).getId(),listToAdd);
+//			//start na nishkata
+//			Thread countDown = new CountDownThread(ticket, this);
+//			countDown.start();
 			return true;
 		}
 		else{
@@ -54,12 +54,12 @@ public class TicketMaster {
 	}
 
 	public void removeTicket(Ticket reservedTicket) {
-		List<Ticket> value = reservedTickets.get(movieDAO.findById(reservedTicket.getMovieId()));
-		boolean hasTicket = value.contains(reservedTicket);
-		if(hasTicket){
-			//remove ticket from list
-			reservedTickets.get(movieDAO.findById(reservedTicket.getMovieId())).remove(reservedTicket);
-		}
+//		List<Ticket> value = reservedTickets.get(movieDAO.findById(reservedTicket.getMovieId()));
+//		boolean hasTicket = value.contains(reservedTicket);
+//		if(hasTicket){
+//			//remove ticket from list
+//			reservedTickets.get(movieDAO.findById(reservedTicket.getMovieId())).remove(reservedTicket);
+//		}
 	}
 
 	/*public Collection<Ticket> getReservedTicketsByMovieId(Long movieId) {

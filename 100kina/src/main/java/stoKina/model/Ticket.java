@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "getTicketsByMovieId",
-    		query = "SELECT t FROM Ticket t WHERE t.movieId=:movieId")})
+    		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle")})
 public class Ticket implements Serializable{
 	
 	
@@ -27,7 +27,7 @@ public class Ticket implements Serializable{
 	private Long id;
 	private Integer seatNumber;
 	
-	private Long movieId;
+	private String movieTitle;
 	
 	@Temporal(TemporalType.DATE)
     private Date timeOfEntry;
@@ -35,10 +35,9 @@ public class Ticket implements Serializable{
 	public Ticket() {
 	}
 	
-	public Ticket(Integer seatNumber, Long movieId) {
-		super();
+	public Ticket(Integer seatNumber, String movieTitle) {
 		this.seatNumber = seatNumber;
-		this.movieId = movieId;
+		this.setMovieTitle(movieTitle);
 		this.timeOfEntry = new Date();
 	}
 
@@ -54,13 +53,6 @@ public class Ticket implements Serializable{
 		this.seatNumber = seatNumber;
 	}
 	
-	public Long getMovieId() {
-		return movieId;
-	}
-	
-	public void setMovieId(Long movieId) {
-		this.movieId = movieId;
-	}
 	
 	public Date getTimeOfEntry() {
 		return timeOfEntry;
@@ -88,6 +80,14 @@ public class Ticket implements Serializable{
 			}
 		}
 		return true;
+	}
+
+	public String getMovieTitle() {
+		return movieTitle;
+	}
+
+	public void setMovieTitle(String movieTitle) {
+		this.movieTitle = movieTitle;
 	}
 	
 }

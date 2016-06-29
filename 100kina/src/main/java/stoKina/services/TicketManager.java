@@ -35,8 +35,8 @@ public class TicketManager {
 	@GET
 	@Path("getTicketsForMovie")
 	@Produces("application/json")
-	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieId") String movieId) {
-		return ticketDAO.getAllTicketsByMvoieId(Long.parseLong(movieId));
+	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieTitle") String movieTitle) {
+		return ticketDAO.getAllTicketsByMvoieTitle(movieTitle);
 	}
 	
 	@GET
