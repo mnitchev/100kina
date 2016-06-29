@@ -95,7 +95,7 @@
 		return buttonHtml;
 	}
 	$(document).on('click', '.btn', function(){
-		if(!$(this).hasClass("btn-info")){
+		if(!$(this).hasClass("btn-info") && !$(this).hasClass("btn-warning")){
 				if(numberOfTickets == 0){
 					alert("Select seat(s)!");
 					location.reload();
@@ -119,23 +119,44 @@
 				}
 			}
 		else{
-			var ticket1 = selectedSeatsList[0], 
-			ticket2 = selectedSeatsList[1],
-		    ticket3 = selectedSeatsList[2], 
-		    ticket4 = selectedSeatsList[3], 
-		    ticket5 = selectedSeatsList[4];
-		   $.ajax({
-		    url: "rest/ticket/buy?movieTitle=" + movieName + "&ticket1=" + ticket1 + "&ticket2=" + ticket2 + "&ticket3=" +  ticket3 + "&ticket4=" + ticket4 + "&ticket5=" + ticket5,
-		    type: "POST",
-		    success: function(){
-		     window.location = "program.html";
-		    },
-		    error: function(){
-		     alert("Unsuccessful payment");
-		     location.reload();
-		    }
-			});
+			if($(this).attr('id') == "buy"){
+				var ticket1 = selectedSeatsList[0], 
+				ticket2 = selectedSeatsList[1],
+			    ticket3 = selectedSeatsList[2], 
+			    ticket4 = selectedSeatsList[3], 
+			    ticket5 = selectedSeatsList[4];
+			   	$.ajax({
+				    url: "rest/ticket/buy?movieTitle=" + movieName + "&ticket1=" + ticket1 + "&ticket2=" + ticket2 + "&ticket3=" +  ticket3 + "&ticket4=" + ticket4 + "&ticket5=" + ticket5,
+				    type: "POST",
+				    success: function(){
+				     	window.location = "program.html";
+				    },
+				    	error: function(){
+				     	alert("Unsuccessful payment");
+				     	location.reload();
+				    }
+				});
+			}
+			if($(this).attr('id') == "reserve"){
+				var ticket1 = selectedSeatsList[0], 
+				ticket2 = selectedSeatsList[1],
+			    ticket3 = selectedSeatsList[2], 
+			    ticket4 = selectedSeatsList[3], 
+			    ticket5 = selectedSeatsList[4];
+			   	$.ajax({
+				    url: "rest/ticket/reserve?movieTitle=" + movieName + "&ticket1=" + ticket1 + "&ticket2=" + ticket2 + "&ticket3=" +  ticket3 + "&ticket4=" + ticket4 + "&ticket5=" + ticket5,
+				    type: "POST",
+				    success: function(){
+				     	window.location = "program.html";
+				    },
+				    	error: function(){
+				     	alert("Unsuccessful payment");
+				     	location.reload();
+				    }
+				});
+			}
 		}
+		
 		for(var i in selectedSeatsList){
 			console.log(selectedSeatsList[i]);
 		}
@@ -202,7 +223,8 @@
     			<div style="text-align:center;font-size:150%;"><p class="text-info">Please select seats: </p></div>
     			<div id="SeatsContainer" ></div>
     			<br>
-    			<div class="buy-button-wrapper"><span id="buy" style="float: none !important;" class="btn btn-info col-lg-2">Buy</span></div>
+    			<div class="buy-button-wrapper"><span id="buy" style="float: none !important;" class="btn btn-info col-lg-2">Buy</span>
+    			<span id="reserve" style="float: none !important;" class="btn btn-warning col-lg-2">Reserve</span></div>
   			</fieldset>
 			</form>
    			</div>

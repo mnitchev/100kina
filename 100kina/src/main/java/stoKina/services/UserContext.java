@@ -2,8 +2,11 @@ package stoKina.services;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.SessionScoped;
+
 import stoKina.model.User;
 
+@SessionScoped
 public class UserContext implements Serializable {
 	/**
 	 * 

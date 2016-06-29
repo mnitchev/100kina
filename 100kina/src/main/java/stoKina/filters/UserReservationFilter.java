@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import stoKina.model.User;
 import stoKina.services.UserContext;
 
-@WebFilter("/movies/reservations/*")
+@WebFilter("/reserve.html")
 public class UserReservationFilter implements Filter {
 
 	@Inject
-	UserContext currentUser;
+	private UserContext currentUser;
 	
 	@Override
 	public void destroy() {	
