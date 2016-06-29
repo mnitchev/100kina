@@ -1,10 +1,11 @@
 package stoKina.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "findByTitle", query = "SELECT m FROM Movie m WHERE m.title =:title"),
-		@NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m "),
-		@NamedQuery(name = "getMovieIdAndTitle", query = "SELECT m.id, m.title from Movie m")})
+		@NamedQuery(name = "getAllMovies", query = "SELECT m FROM Movie m ")})
 public class Movie implements Serializable {
 
 	private static final long serialVersionUID = -7936362793263897507L;
@@ -27,8 +27,8 @@ public class Movie implements Serializable {
 	private Long id;
 	private String title;
 	
-	@OneToMany
-	private List<Ticket> paidTickets = new ArrayList<>();
+	@OneToMany(fetch=FetchType.EAGER)
+	private Set<Ticket> paidTickets = new HashSet<>();
 	
 	public Movie() {
 	}
@@ -49,11 +49,11 @@ public class Movie implements Serializable {
 		return id;
 	}
 	
-	public List<Ticket> getPaidTickets() {
+	public Set<Ticket> getPaidTickets() {
 		return paidTickets;
 	}
 
-	public void setPaidTickets(List<Ticket> paidTickets) {
+	public void setPaidTickets(Set<Ticket> paidTickets) {
 		this.paidTickets = paidTickets;
 	}
 

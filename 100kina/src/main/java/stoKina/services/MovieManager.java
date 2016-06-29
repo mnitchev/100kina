@@ -3,6 +3,7 @@ package stoKina.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,7 +18,6 @@ import javax.ws.rs.core.Response;
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
 import stoKina.model.Movie;
-import stoKina.model.SimpleMovie;
 import stoKina.model.Ticket;
 
 @Stateless
@@ -45,7 +45,7 @@ public class MovieManager {
 //        }
       //  JSONArray mJSONArray = new JSONArray(Arrays.asList(simpleResult));
       //  return simpleResult;
-		Collection<Movie> queryResult = movieDAO.getMovieIdAndTitle();
+		Collection<Movie> queryResult = movieDAO.getAllMovies();
 		return queryResult;
     }
 
