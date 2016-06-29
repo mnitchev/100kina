@@ -9,6 +9,11 @@
 </head>
 <body>
 	<script>
+	var moviePanel = '<div class="panel panel-default" style="float:none!important!;margin-left:auto; margin-right:auto; position:relative;  width:40%">';
+	var panelHeading = '<div class="panel-heading">';
+	var closeDivs = '</div>';
+	var panelBody = '<div class="panel-body">';
+	
 	$(document).ready(function(){
 		$.ajax({
             url : "MockMovies.json", 
@@ -27,7 +32,14 @@
 	
 	function getMovieHTML(movie){
 		console.log(movie.title);
-		return '<p> <a href="reserve.html#' + movie.id + '">' + movie.title + "</a></p>";
+		return moviePanel + panelHeading + movie.title + closeDivs
+			+ panelBody + '<img src=";' + movie.image;
+		
+		
+		
+		
+		
+		//'<p> <a href="reserve.html#' + movie.id + '">' + movie.title + "</a></p>";
 	}
 	</script>
 	
@@ -58,8 +70,20 @@
     		</div>
     	</div>
     </div>
+    <div class="panel panel-default" style="float:none!important!; margin-left:auto; margin-right:auto; position:relative;  width:40%">
+  		<div class="panel-heading">Lord of the Rings</div>
+  		<div class="panel-body">
+    		<img src="https://upload.wikimedia.org/wikipedia/en/8/87/Ringstrilogyposter.jpg" style="position:absolute"  width = 20%>
+    		<br>
+    		<br>
+    		<br>
+    		<ul class="pager">
+  				<li class="next"><a href="#">Reserve &rarr;</a></li>
+			</ul>
+  		</div>
+	</div>
+	
     <div id="movieContainer"></div>
-    
     
     </body>
 </html>
