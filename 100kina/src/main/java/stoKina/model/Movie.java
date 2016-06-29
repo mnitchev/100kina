@@ -24,7 +24,7 @@ public class Movie implements Serializable {
 	private static final long serialVersionUID = -7936362793263897507L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 	private String title;
 	
 	@OneToMany(fetch=FetchType.EAGER)
@@ -45,7 +45,7 @@ public class Movie implements Serializable {
 		this.title = title;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -60,8 +60,12 @@ public class Movie implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		
+		sb.append(getId().toString());
+		sb.append(" ");
 		sb.append(getTitle());
 		sb.append(" ");
+		
 		return sb.toString();
 	}
 

@@ -45,7 +45,11 @@ public class MovieManager {
 //        }
       //  JSONArray mJSONArray = new JSONArray(Arrays.asList(simpleResult));
       //  return simpleResult;
+		
 		Collection<Movie> queryResult = movieDAO.getAllMovies();
+		for (Movie movie : queryResult) {
+			System.out.println(movie.getId());
+		}
 		return queryResult;
     }
 
@@ -53,7 +57,7 @@ public class MovieManager {
     @Path("{movieId}")
     @Produces("application/json")
     public Movie getMovie(@PathParam("movieId") String movieId) {
-        return movieDAO.findById(Long.parseLong(movieId));
+        return movieDAO.findById(Integer.parseInt(movieId));
     }
     
     @GET
@@ -75,7 +79,7 @@ public class MovieManager {
     @PUT
     @Path("/buyTicket")
     public Response buyTicketForMovie(@QueryParam("movieId") String movieId, String seatNumbers) {
-        Movie movieToReserve = movieDAO.findById(Long.parseLong(movieId));
+        Movie movieToReserve = movieDAO.findById(Integer.parseInt(movieId));
         if (movieToReserve != null) {
             //movieDAO.buyTicket(movieToReserve, userContext.getCurrentUser(), ticketDAO.findById(Long.parseLong(ticketId)));
         	//TODO:
