@@ -31,8 +31,7 @@
             accept: "application/json",
             //contentType: "application/json;charset=UTF-8",
             //dataType: "json",
-            success : function(response) {
-            	debugger;
+            success : function(response) {         
          	   	var htmlCollector = "";
                	response.movie.forEach(function(movie){
             	   htmlCollector += getMovieHTML(movie);

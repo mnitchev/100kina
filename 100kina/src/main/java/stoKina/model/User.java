@@ -37,10 +37,10 @@ public class User implements Serializable{
 	private String email;
 	private String role;
 
-    @OneToMany
-    private Set<Ticket> paidTickets = new HashSet<>();
-//    @OneToMany
-//    private Set<Movie> paidForMovies = new HashSet<>();
+   // @OneToMany
+   // private Set<Ticket> paidTickets = new HashSet<>();
+   // @OneToMany
+   // private Set<Movie> paidForMovies = new HashSet<>();
 
 	public User() {
     }
@@ -96,13 +96,13 @@ public class User implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
-    public Set<Ticket> getPaidTickets() {
-		return paidTickets;
-	}
+   // public Set<Ticket> getPaidTickets() {
+		//return paidTickets;
+	//}
 
-	public void setPaidTickets(Set<Ticket> paidTickets) {
-		this.paidTickets = paidTickets;
-	}
+	//public void setPaidTickets(Set<Ticket> paidTickets) {
+	//	this.paidTickets = paidTickets;
+	//}
 //	public Set<Movie> getPaidForMovies() {
 //		return paidForMovies;
 //	}
@@ -128,11 +128,11 @@ public class User implements Serializable{
 //        for (Movie m : getPaidForMovies()) {
 //			sb.append(m.toString());
 //			sb.append(" ");
-//		}
+/*//		}
         for (Ticket t : getPaidTickets()) {
 			sb.append(t.toString());
 			sb.append(" ");
-		}
+		}*/
         return sb.toString();
     }
 

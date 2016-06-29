@@ -27,8 +27,8 @@ public class Movie implements Serializable {
 	private Integer id;
 	private String title;
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	private Set<Ticket> paidTickets = new HashSet<>();
+	//@OneToMany(fetch=FetchType.EAGER)
+	//private Set<Ticket> paidTickets = new HashSet<>();
 	
 	public Movie() {
 	}
@@ -49,13 +49,13 @@ public class Movie implements Serializable {
 		return id;
 	}
 	
-	public Set<Ticket> getPaidTickets() {
-		return paidTickets;
-	}
+	//public Set<Ticket> getPaidTickets() {
+	//	return paidTickets;
+	//}
 
-	public void setPaidTickets(Set<Ticket> paidTickets) {
-		this.paidTickets = paidTickets;
-	}
+	//public void setPaidTickets(Set<Ticket> paidTickets) {
+	//	this.paidTickets = paidTickets;
+	//}
 
 	@Override
 	public String toString() {

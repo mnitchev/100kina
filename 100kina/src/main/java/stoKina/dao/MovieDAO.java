@@ -49,14 +49,15 @@ public class MovieDAO {
 //        foundUser.getPaidTickets().add(new Ticket(seatNumber, movieTitle, timeOfEntry));
 //        foundMovie.getUsers().add(foundUser);
 //    }
-    
+    /*
     public void buyTicket(Movie movieToReserve, User user, Ticket ticket) {
         user.getPaidTickets().add(ticket);
         movieToReserve.getPaidTickets().add(ticket);
-    }
+    }*/
     
     public Collection<Movie> getAllMovies() {
-        return em.createNamedQuery("getAllMovies", Movie.class).getResultList();
+    	Collection<Movie> result =  em.createNamedQuery("getAllMovies", Movie.class).getResultList();
+    	return result;
     }
     
 	public Movie findById(Integer key) {
@@ -66,6 +67,14 @@ public class MovieDAO {
 	public Collection<Movie> getMovieIdAndTitle() {
 		return em.createNamedQuery("getMovieIdAndTitle", Movie.class).getResultList();
 	}
+
+
+	/*public void addTicket(Movie movie, Ticket ticket) {
+		em.getTransaction().begin();
+		movie = em.find(Movie.class, movie.getId());
+		movie.getPaidTickets().add(ticket);
+		em.getTransaction().commit();
+	}*/
     
 	
 }

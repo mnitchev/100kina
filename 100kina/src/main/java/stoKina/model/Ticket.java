@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
@@ -18,8 +19,10 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "getTicketsByMovieId",
-    		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle")})
+    @NamedQuery(name = "getTicketsByMovieTitle",
+    		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle"),
+    @NamedQuery(name = "findTicketsByUser",
+    		query = "SELECT t FROM Ticket t WHERE t.owner.id=:id")})
 public class Ticket implements Serializable{
 	
 	
@@ -32,15 +35,23 @@ public class Ticket implements Serializable{
 	
 	private String movieTitle;
 	
+	@ManyToOne
+	private User owner;
+	
+	@ManyToOne
+	private Movie movie;
+	
 	@Temporal(TemporalType.DATE)
     private Date timeOfEntry;
 
 	public Ticket() {
 	}
 	
-	public Ticket(Integer seatNumber, String movieTitle) {
+	public Ticket(Integer seatNumber, User user, Movie movie) {
 		this.seatNumber = seatNumber;
-		this.setMovieTitle(movieTitle);
+		this.movie = movie;
+		this.movieTitle = movie.getTitle();
+		this.owner = user;
 		this.timeOfEntry = new Date();
 	}
 
@@ -86,11 +97,19 @@ public class Ticket implements Serializable{
 	}
 
 	public String getMovieTitle() {
-		return movieTitle;
+		return movie.getTitle();
 	}
-
-	public void setMovieTitle(String movieTitle) {
-		this.movieTitle = movieTitle;
+	
+	public void setOwner(User user){
+		this.owner = user;
 	}
+	
+	public void setMovie(Movie movie){
+		this.movie = movie;
+		this.movieTitle = movie.getTitle();
+	}
+//	public void setMovieTitle(String movieTitle) {
+//		this.movieTitle = movieTitle;
+//	}
 	
 }

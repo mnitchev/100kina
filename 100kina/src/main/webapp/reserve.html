@@ -48,16 +48,14 @@
 		})
 		
 		$.ajax({
-			url: "rest/ticket/getTicketsForMovie",
+			url: "rest/ticket/getAllTicketsForMovie?movieTitle=" + movieName,
 			type: "GET",
-			contentType: "application/json;charset=UTF-8",
-			data: movieName,
+			dataType: "json",
 			success: function(data, textStatus, xhr){
 				debugger;
-				response = JSON.parse(response);
 				
-				for(var i in movies){
-					seatList.push(movies[i]);
+				for(var i in data){
+					seatList.push(data[i]);
 				}
 			}
 		});

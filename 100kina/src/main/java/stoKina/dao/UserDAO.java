@@ -1,10 +1,14 @@
 package stoKina.dao;
 
+
+import javax.transaction.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 
 import javax.ejb.Singleton;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -58,11 +62,15 @@ public class UserDAO {
 	 public Collection<User> getAllUsers() {
 	        return em.createNamedQuery("getAllUsers", User.class).getResultList();
 	    }
+	 
 	 public Collection<Ticket> getTicketsForUser(User user) {	 
 		 TypedQuery<User> query = em.createNamedQuery("findById", User.class)
 				 .setParameter("id",user.getId());
-				 return query.getSingleResult().getPaidTickets();
+		user = query.getSingleResult();
+		TypedQuery<Ticket> ticketQuery = em.createNamedQuery("findTicketsByUser", Ticket.class);
+		return ticketQuery.getResultList();
 	 }
+	 
 	private String getHashedPassword(String password) {
     	String generatedPassword;
         try {
@@ -82,4 +90,18 @@ public class UserDAO {
         }
         return generatedPassword;
     }
+	
+	@TransactionAttribute
+	public void buyTicketForUser(User user, Ticket ticket) {
+		try{
+			em.getTransaction().begin();
+			user = em.find(User.class, user.getId());
+			//user.getPaidTickets().add(ticket);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			
+		}finally{
+			
+		}
+	}
 }

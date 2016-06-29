@@ -10,8 +10,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
 import stoKina.model.Ticket;
 
@@ -23,7 +25,13 @@ public class TicketManager {
 	private TicketDAO ticketDAO;
 	
 	@Inject
+	private MovieDAO movieDAO;
+	
+	@Inject
 	private TicketMaster ticketMaster;
+	
+	@Inject
+	private UserContext context;
 	
 	@GET
 	@Path("{ticketId}")
@@ -33,9 +41,10 @@ public class TicketManager {
 	}
 	
 	@GET
-	@Path("getTicketsForMovie")
+	@Path("getAllTicketsForMovie")
 	@Produces("application/json")
-	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieTitle") String movieTitle) {
+	public Collection<Ticket> getAllTicketsForMovie(@QueryParam("movieTitle") String movieTitle) {
+		System.out.println(movieTitle);
 		return ticketDAO.getAllTicketsByMovieTitle(movieTitle);
 	}
 	
@@ -48,10 +57,21 @@ public class TicketManager {
 		//return .!.. ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
 	}
 	
-	@POST
+	/*@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addTicket(Ticket ticket){
 		ticketDAO.addTicket(ticket);
+	}*/
+	
+	@Path("buy")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void buyTickets(Collection<Ticket> tickets, @PathParam("movieTitle") String movieTitle){
+		for(Ticket ticket : tickets){
+			ticket.setOwner(context.getCurrentUser());
+			ticket.setMovie(movieDAO.findByTitle(movieTitle));
+			ticketDAO.addTicket(ticket);
+		}
 	}
 
 }

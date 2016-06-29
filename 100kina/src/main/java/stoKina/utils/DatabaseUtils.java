@@ -32,7 +32,12 @@ public class DatabaseUtils {
 	            new Movie("Star wars: The Empire Strikes Back"),
 	            new Movie("Star wars: Return of The Jedi"),
 	            new Movie("Star wars: The Force Awakens")};
-
+	   /* private static Ticket[] TICKETS = {
+	    		new Ticket(12, "Star wars: The Phantom Menance"),
+	    		new Ticket(13, "Star wars: The Phantom Menance"),
+	    		new Ticket(14, "Star wars: The Phantom Menance"),
+	    		new Ticket(1, "Star wars: The Phantom Menance")};
+	    */
 	    @PersistenceContext
 	    private EntityManager em;
 
@@ -53,6 +58,7 @@ public class DatabaseUtils {
 	        deleteData();
 	        addTestUsers();
 	        addTestMovies();
+	        addTestTickets();
 	    }
 
 	    private void deleteData() {
@@ -71,5 +77,19 @@ public class DatabaseUtils {
 	        for (Movie movie : MOVIES) {
 	            movieDAO.addMovie(movie);
 	        }
+	    }
+	    
+	    private void addTestTickets(){
+	    	User user = userDAO.findByUserName(USERS[0].getUserName());
+	    	Movie movie = movieDAO.findByTitle(MOVIES[0].getTitle());
+	    	Ticket ticket = new Ticket(12, user, movie);
+	    	ticketDAO.addTicket(ticket);
+	    	ticket = new Ticket(13, user, movie);
+	    	ticketDAO.addTicket(ticket);
+	    	ticket = new Ticket(14, user, movie);
+	    	ticketDAO.addTicket(ticket);
+	    	ticket = new Ticket(1, user, movie);
+	    	ticketDAO.addTicket(ticket);
+	    	
 	    }
 }
