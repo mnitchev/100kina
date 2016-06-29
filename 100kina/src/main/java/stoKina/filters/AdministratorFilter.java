@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import stoKina.model.User;
 import stoKina.services.UserContext;
 
-@WebFilter("/secure/register_staff.html")
+@WebFilter({"/register_staff.html", "/rest/user/secure"})
 public class AdministratorFilter implements Filter {
 
 	@Inject
-	UserContext context;
+	private UserContext context;
 	
 	@Override
 	public void destroy() {
@@ -37,7 +37,7 @@ public class AdministratorFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		User currentUser = context.getCurrentUser();
-		if(currentUser == null || currentUser.getRole().equals(User.STAFF)){
+		if(currentUser == null || !currentUser.getRole().equals(User.ADMINISTRATOR)){
 			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
 			return;
 		}
