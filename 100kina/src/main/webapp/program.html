@@ -18,29 +18,32 @@
 		$.ajax({
             url : "MockMovies.json", 
             type : "GET",
+            contentType: "application/json;charset=UTF-8",
             success : function(response) {
             	response = JSON.parse(response);
             	
-         	   var htmlCollector = "";
-               response.movies.forEach(function(movie){
+         	   	var htmlCollector = "";
+               	response.movies.forEach(function(movie){
             	   htmlCollector += getMovieHTML(movie);
-               });
-               $("#movieContainer").html(htmlCollector);
+               	});
+               	$("#movieContainer").html(htmlCollector);
             }
         });
 	});
 	
 	function getMovieHTML(movie){
-		console.log(movie.title);
+		console.log(movie.id);
 		return moviePanel + panelHeading + movie.title + closeDivs
-			+ panelBody + '<img src=";' + movie.image;
+			+ panelBody + '<img src="' + movie.image + '" style="position:absolute"  height=120px > \n <br> \n <br> \n <br>'
+			+ '<ul class="pager"><li class="next"><a href="reserve.html#' + movie.id + '">Reserve &rarr;</a></li></ul></div></div>';
+	}
 		
 		
 		
 		
 		
 		//'<p> <a href="reserve.html#' + movie.id + '">' + movie.title + "</a></p>";
-	}
+	
 	</script>
 	
 	
@@ -70,18 +73,6 @@
     		</div>
     	</div>
     </div>
-    <div class="panel panel-default" style="float:none!important!; margin-left:auto; margin-right:auto; position:relative;  width:40%">
-  		<div class="panel-heading">Lord of the Rings</div>
-  		<div class="panel-body">
-    		<img src="https://upload.wikimedia.org/wikipedia/en/8/87/Ringstrilogyposter.jpg" style="position:absolute"  width = 20%>
-    		<br>
-    		<br>
-    		<br>
-    		<ul class="pager">
-  				<li class="next"><a href="#">Reserve &rarr;</a></li>
-			</ul>
-  		</div>
-	</div>
 	
     <div id="movieContainer"></div>
     

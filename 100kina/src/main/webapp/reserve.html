@@ -27,21 +27,30 @@
 	var seatList = [6, 7, 8, 9];
 	var selectedSeats = 0;
 	var selectedSeatsList = ["adwd"];
+	var movieHashCode;
 	function storeTickets(){
 		numberOfTickets = $("#tickets :selected").val();
 	}
 	
 	$(document).ready(function produceSeats(){
+		movieHashCode = location.hash;
+		movieID = movieHashCode.replace("#", "");
+		console.log(movieID);
 		$.ajax({
-			url: "",
+			url: "rest/ticket/getTicketsForMovie",
 			type: "GET",
-			success: function(movies){
-				//for(var i in movies){
-				//	seatList.push(movies[i]);
-				//}
+			contentType: "application/json;charset=UTF-8",
+			data: movieID,
+			success: function(data, textStatus, xhr){
+				debugger;
+				response = JSON.parse(response);
+				
+				for(var i in movies){
+					seatList.push(movies[i]);
+				}
 			}
 		});
-			
+		
 		var htmlCollector = "";
 		htmlCollector += "<div class=\"btn-toolbar\"><div class=\"btn-group \">";
 		console.log(htmlCollector);
@@ -58,7 +67,7 @@
 		var buttonHtml = "";
 		for(var i = 1; i <= 20; i++){
 			if(seatList.includes(i)){
-				buttonHtml += "<span id=\"B" + i + "\" class=\"btn btn-danger disabled\">" + i + "</span>";
+				buttonHtml += "<a href=\"#\" id=\"B" + i + "\" class=\"btn btn-danger disabled\">" + i + "</a>";
 			}
 			else{
 				buttonHtml += "<span id=\"B" + i + "\" class=\"btn btn-default\">" + i + "</span>";
