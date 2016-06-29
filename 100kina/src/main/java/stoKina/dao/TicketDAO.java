@@ -36,7 +36,7 @@ public class TicketDAO {
 
 	public Collection<Ticket> getAllTicketsByUserId(Long id) {
 		return em.createNamedQuery("findTicketsByUser", Ticket.class).
-				setParameter("owner.id", id).getResultList();
+				setParameter("id", id).getResultList();
 	}
 
 	public boolean isFree(Ticket ticket) {

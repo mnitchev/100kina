@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
     @NamedQuery(name = "getTicketsByMovieTitle",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle"),
     @NamedQuery(name = "findTicketsByUser",
-    		query = "SELECT t FROM Ticket t WHERE t.owner.id=:id"),
+    		query = "SELECT t FROM Ticket t WHERE t.userId=:id"),
     @NamedQuery(name = "findTicket",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle AND t.seatNumber=:seatNumber")})
 public class Ticket implements Serializable{
@@ -37,11 +37,13 @@ public class Ticket implements Serializable{
 	
 	private String movieTitle;
 	
-	@ManyToOne
+	private Long userId;
+	
+	/*@ManyToOne
 	private User owner;
 	
 	@ManyToOne
-	private Movie movie;
+	private Movie movie;*/
 	
 	@Temporal(TemporalType.DATE)
     private Date timeOfEntry;
@@ -51,9 +53,8 @@ public class Ticket implements Serializable{
 	
 	public Ticket(Integer seatNumber, User user, Movie movie) {
 		this.seatNumber = seatNumber;
-		this.movie = movie;
 		this.movieTitle = movie.getTitle();
-		this.owner = user;
+		this.userId = user.getId();
 		this.timeOfEntry = new Date();
 	}
 
@@ -99,15 +100,14 @@ public class Ticket implements Serializable{
 	}
 
 	public String getMovieTitle() {
-		return movie.getTitle();
+		return movieTitle;
 	}
 	
 	public void setOwner(User user){
-		this.owner = user;
+		this.userId = user.getId();
 	}
 	
 	public void setMovie(Movie movie){
-		this.movie = movie;
 		this.movieTitle = movie.getTitle();
 	}
 //	public void setMovieTitle(String movieTitle) {

@@ -1,12 +1,14 @@
 package stoKina.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import stoKina.model.Movie;
 import stoKina.model.Ticket;
 
 @ApplicationScoped
@@ -16,6 +18,9 @@ public class TicketOrganizer {
 	
 	public boolean isTicketReseved(Integer movieId , int seatNumber) {
 		List<Ticket> ticketsForMovie = this.reservedTickets.get(movieId);
+		if(ticketsForMovie == null){
+			return false;
+		}
 		for (Ticket ticket : ticketsForMovie) {
 			if(ticket.getSeatNumber()==seatNumber)
 			{
@@ -51,6 +56,13 @@ public class TicketOrganizer {
 			}
 		}
 		
+	}
+	
+	public Collection<Ticket> getAllReservedForMovie(Integer movieId){
+		if(!reservedTickets.containsKey(movieId)){
+			return null;
+		}
+		return reservedTickets.get(movieId);
 	}
 	
 }

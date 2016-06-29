@@ -48,7 +48,21 @@ public class TicketManager {
 	@Path("getAllTicketsForMovie")
 	@Produces("application/json")
 	public Collection<Ticket> getAllTicketsForMovie(@QueryParam("movieTitle") String movieTitle) {
-		return ticketDAO.getAllTicketsByMovieTitle(movieTitle);
+		List<Ticket> result = new ArrayList<>(); 
+		Collection<Ticket> dbTickets = ticketDAO.getAllTicketsByMovieTitle(movieTitle);
+		if(!dbTickets.isEmpty()){
+			for(Ticket ticket : dbTickets){
+				result.add(ticket);
+			}
+		}
+		Integer movieId = movieDAO.findByTitle(movieTitle).getId();
+		Collection<Ticket> blocked = to.getAllReservedForMovie(movieId);
+		if(blocked != null){
+			for(Ticket ticket : blocked){
+				result.add(ticket);
+			}
+		}
+		return result;
 	}
 	
 	@GET

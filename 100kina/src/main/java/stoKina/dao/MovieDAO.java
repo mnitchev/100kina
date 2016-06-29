@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -24,8 +25,11 @@ public class MovieDAO {
 	        TypedQuery<Movie> query = em
 	                .createNamedQuery("findByTitle", Movie.class)
 	                .setParameter("title", title);
-	        
+	        try{
 	            return query.getSingleResult();
+	        }catch(NoResultException e){
+	        	return null;
+	        }
 	}
 
     /*
