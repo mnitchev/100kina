@@ -18,7 +18,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "validateUser", query = "SELECT u FROM User u WHERE u.userName=:userName AND u.password=:password"),
     @NamedQuery(name = "getAllUsers", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "findByName", query = "SELECT u FROM User u WHERE u.userName=:userName")})
+    @NamedQuery(name = "findByUserName", query = "SELECT u FROM User u WHERE u.userName=:userName"),
+    @NamedQuery(name = "findById", query = "SELECT u FROM User u WHERE u.id=:id"),
+    @NamedQuery(name = "getMoviesForUser", query = "SELECT u FROM User u WHERE u.userName=:userName")})
 public class User implements Serializable{
     
 	private static final long serialVersionUID = -1499972552436486091L;
@@ -37,6 +39,8 @@ public class User implements Serializable{
 
     @OneToMany
     private Set<Ticket> paidTickets = new HashSet<>();
+//    @OneToMany
+//    private Set<Movie> paidForMovies = new HashSet<>();
 
 	public User() {
     }
@@ -99,17 +103,37 @@ public class User implements Serializable{
 	public void setPaidTickets(Set<Ticket> paidTickets) {
 		this.paidTickets = paidTickets;
 	}
+//	public Set<Movie> getPaidForMovies() {
+//		return paidForMovies;
+//	}
+//
+//	public void setPaidForMovies(Set<Movie> paidForMovies) {
+//		this.paidForMovies = paidForMovies;
+//	}
 
     @Override
     public String toString() {
-        String result = getClass().getSimpleName() + " ";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" ");
         if (userName != null && !userName.trim().isEmpty())
-            result += "userName: " + userName;
+            sb.append("userName: ");
+         	sb.append(userName);
         if (password != null && !password.trim().isEmpty())
-            result += ", password: " + password;
+            sb.append(", password: ");
+        	sb.append(password);
         if (email != null && !email.trim().isEmpty())
-            result += ", email: " + email;
-        return result;
+            sb.append(", email: ");
+        	sb.append(email);
+//        for (Movie m : getPaidForMovies()) {
+//			sb.append(m.toString());
+//			sb.append(" ");
+//		}
+        for (Ticket t : getPaidTickets()) {
+			sb.append(t.toString());
+			sb.append(" ");
+		}
+        return sb.toString();
     }
 
     @Override

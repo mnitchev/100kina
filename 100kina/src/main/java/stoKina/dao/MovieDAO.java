@@ -55,7 +55,7 @@ public class MovieDAO {
     
     public void buyTicket(Movie movieToReserve, User user, Ticket ticket) {
         user.getPaidTickets().add(ticket);
-        movieToReserve.getUsers().add(user);
+        movieToReserve.getPaidTickets().add(ticket);
     }
     
     public Collection<Movie> getAllMovies() {

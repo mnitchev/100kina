@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import stoKina.model.Ticket;
 import stoKina.model.User;
 
 @Singleton
@@ -19,7 +20,7 @@ public class UserDAO {
 
     
 	public boolean addUser(User user) {
-		if (findUserByName(user.getUserName()) != null) {
+		if (findByUserName(user.getUserName()) != null) {
 			return false;
 		}
 		user.setPassword(getHashedPassword(user.getPassword()));
@@ -39,18 +40,29 @@ public class UserDAO {
 		    }
 	}
 	
-	 public User findUserByName(String userName) {
-	     TypedQuery<User> query = em.createNamedQuery("findByName", User.class)
+	
+	
+	 public User findById(long key) {
+		        return em.find(User.class, key);
+		}
+	 public User findByUserName(String userName)
+	 {
+	     TypedQuery<User> query = em.createNamedQuery("findByUserName", User.class)
 	    		 .setParameter("userName", userName);
 	     try {
 	            return query.getSingleResult();
 	        } catch (Exception e) {
 	            return null;
 	        }
-	    }
+	   }
 	 public Collection<User> getAllUsers() {
 	        return em.createNamedQuery("getAllUsers", User.class).getResultList();
 	    }
+	 public Collection<Ticket> getTicketsForUser(User user) {	 
+		 TypedQuery<User> query = em.createNamedQuery("findById", User.class)
+				 .setParameter("id",user.getId());
+				 return query.getSingleResult().getPaidTickets();
+	 }
 	private String getHashedPassword(String password) {
     	String generatedPassword;
         try {
