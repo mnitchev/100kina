@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -43,6 +44,11 @@ public class TicketDAO {
 				setParameter("movieTitle", ticket.getMovieTitle()).
 				setParameter("seatNumber", ticket.getSeatNumber());
 		
-		return query.getSingleResult() != null;
+		try{ 
+			query.getSingleResult();
+			return false;
+		}catch(NoResultException e){
+			return true;
+		}
 	}
 }

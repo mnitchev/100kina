@@ -119,24 +119,21 @@
 				}
 			}
 		else{
-			var order = "{movieTitle: movieName, ["
-			for(var i in selectedSeatsList){
-				order += "{seatNumber: " + selectedSeatsList[i];
-				order += "},"
-			}
-			order += "]}"
-			$.ajax({
-				url: "rest/ticket/buy",
-				type: "POST",
-				contentType: "json",
-				data: JSON.stringify(order),
-				success: function(){
-					window.location = "program.html";
-				},
-				error: function(){
-					alert("Unsuccessful payment");
-					location.reload();
-				}
+			var ticket1 = selectedSeatsList[0], 
+			ticket2 = selectedSeatsList[1],
+		    ticket3 = selectedSeatsList[2], 
+		    ticket4 = selectedSeatsList[3], 
+		    ticket5 = selectedSeatsList[4];
+		   $.ajax({
+		    url: "rest/ticket/buy?movieTitle=" + movieName + "&ticket1=" + ticket1 + "&ticket2=" + ticket2 + "&ticket3=" +  ticket3 + "&ticket4=" + ticket4 + "&ticket5=" + ticket5,
+		    type: "POST",
+		    success: function(){
+		     window.location = "program.html";
+		    },
+		    error: function(){
+		     alert("Unsuccessful payment");
+		     location.reload();
+		    }
 			});
 		}
 		for(var i in selectedSeatsList){

@@ -1,6 +1,8 @@
 package stoKina.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
+import stoKina.model.Movie;
 import stoKina.model.Ticket;
 
 @Stateless
@@ -73,7 +76,27 @@ public class TicketManager {
 	@Path("buy")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response buyTickets(Collection<Ticket> tickets, @PathParam("movieTitle") String movieTitle){
+	public Response buyTickets(@QueryParam("movieTitle") String movieTitle, @QueryParam("ticket1") String ticket1, 
+			@QueryParam("ticket2") String ticket2, @QueryParam("ticket3") String ticket3,
+			@QueryParam("ticket4") String ticket4, @QueryParam("ticket5") String ticket5){
+		Movie movie = movieDAO.findByTitle(movieTitle);
+		List<Ticket> tickets = new ArrayList<>();
+		if(!ticket1.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket1),context.getCurrentUser(), movie));
+		}
+		if(!ticket2.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket2),context.getCurrentUser(), movie));
+		}
+		if(!ticket3.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket3),context.getCurrentUser(), movie));
+		}
+		if(!ticket4.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket4),context.getCurrentUser(), movie));
+		}
+		if(!ticket5.equals("undefined")){
+			tickets.add(new Ticket(Integer.parseInt(ticket5),context.getCurrentUser(), movie));
+		}
+		
 		for (Ticket ticket : tickets) {
 			if (!ticketDAO.isFree(ticket)) {
 				return Response.notAcceptable(null).build();

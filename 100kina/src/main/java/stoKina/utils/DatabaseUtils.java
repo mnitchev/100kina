@@ -25,13 +25,13 @@ public class DatabaseUtils {
 	            new User("100kila", "kilatamaika", "kilata@abv.bg")};
 
 	    private static Movie[] MOVIES = {
-	            new Movie("Star wars: The Phantom Menance"),
-	            new Movie("Star wars: Attack of The Clones"),
-	            new Movie("Star wars: Revenge of The Sith"),
-	            new Movie("Star wars: A New Hope"),
-	            new Movie("Star wars: The Empire Strikes Back"),
-	            new Movie("Star wars: Return of The Jedi"),
-	            new Movie("Star wars: The Force Awakens")};
+	            new Movie("Star Wars: The Phantom Menance"),
+	            new Movie("Star Wars: Attack of The Clones"),
+	            new Movie("Star Wars: Revenge of The Sith"),
+	            new Movie("Star Wars: A New Hope"),
+	            new Movie("Star Wars: The Empire Strikes Back"),
+	            new Movie("Star Wars: Return of The Jedi"),
+	            new Movie("Star Wars: The Force Awakens")};
 	   /* private static Ticket[] TICKETS = {
 	    		new Ticket(12, "Star wars: The Phantom Menance"),
 	    		new Ticket(13, "Star wars: The Phantom Menance"),

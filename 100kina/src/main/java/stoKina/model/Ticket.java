@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
     @NamedQuery(name = "findTicketsByUser",
     		query = "SELECT t FROM Ticket t WHERE t.owner.id=:id"),
     @NamedQuery(name = "findTicket",
-    		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:title AND t.seatNumber=:seatNumber")})
+    		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle AND t.seatNumber=:seatNumber")})
 public class Ticket implements Serializable{
 	
 	
