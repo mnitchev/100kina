@@ -81,10 +81,14 @@ public class TicketManager {
 	}
 	
 	@GET
-	@Path("secure/getAllTicketsForUser")
-	@Produces("application/json")
+	@Path("staffGetAllTicketsForUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
 	public Collection<Ticket> getAllTicketsForUserStaff(@QueryParam("username") String username) {
 		User user = userDAO.findByUserName(username);
+		if(user == null){
+			return new ArrayList<>();
+		}
 		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getUserName());
 		return result;
 	}

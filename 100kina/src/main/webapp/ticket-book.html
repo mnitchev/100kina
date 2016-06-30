@@ -28,15 +28,16 @@ $(document).ready(function(){
 		},
 	});
 });
-$(document).on('click', '#staff', function(){
+$(document).on('click', '#staff', function(event){
 	requiredUserName = $("#username").val();
-	debugger;
-	console.log(queryUserName);
+	event.preventDefault();
 	$.ajax({
-        url : "secure/getAllTicketsForUse?username=" + requiredUserName,
+        url : "rest/ticket/staffGetAllTicketsForUser?username=" + requiredUserName,
         type : "GET",
         accept: "application/json",
-        success : function(response) { 
+        //contentType: "application/json;charset=UTF-8",
+        //dataType: "json",
+        success : function(response) {
         	var htmlCollector = "";
         	var wholePrice = 0;
             response.ticket.forEach(function(ticket){

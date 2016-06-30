@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import stoKina.model.User;
 import stoKina.services.UserContext;
 
-@WebFilter("/rest/ticket/secure/*")
+@WebFilter({"/rest/ticket/staffGetAllTicketsForUser*", "/ticket-book.html"})
 public class StaffResourcesFilter implements Filter {
 	
 	@Inject

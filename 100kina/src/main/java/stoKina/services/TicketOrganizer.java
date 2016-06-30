@@ -14,7 +14,7 @@ import stoKina.model.Ticket;
 
 @ApplicationScoped
 public class TicketOrganizer {
-	public static final int Timer = 10000;
+	public static final int Timer = 20000;
 	private ConcurrentHashMap<Integer , List<Ticket>> reservedTickets = new ConcurrentHashMap<>();
 	
 	public void cleanBlocked(Integer movieId){
