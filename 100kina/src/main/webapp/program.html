@@ -21,7 +21,7 @@
 			dataType: "text",
 			success: function(user, textStatus, xhr){
 				userName = user;
-				if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#">' + userName + '</a>');
+				if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#">Logout (' + userName + ')</a>');
 			},
 		})
 		
@@ -46,8 +46,15 @@
 		return moviePanel + panelHeading + movie.title + closeDivs
 			+ panelBody + '<ul class="pager"><li class="next"><a href="reserve.html#' + movie.title + '">Reserve &rarr;</a></li></ul></div></div>';
 	}
-		
-		
+	$(document).on('click', '#currentUser', function(){
+		$.ajax({
+			url: "rest/user/logout",
+			type: "GET",
+			success: function(user, textStatus, xhr){
+				window.location = "program.html";
+			}
+		})
+	});	
 		
 		
 		

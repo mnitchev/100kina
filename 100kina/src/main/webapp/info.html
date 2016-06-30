@@ -23,7 +23,7 @@ $(document).ready(function(){
 		dataType: "text",
 		success: function(user, textStatus, xhr){
 			userName = user;
-			if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#">' + userName + '</a>');
+			if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#"> Logout (' + userName + ')</a>');
 		},
 	});
 	
@@ -56,7 +56,15 @@ $(document).ready(function(){
     
 	});
 });
-
+$(document).on('click', '#currentUser', function(){
+	$.ajax({
+		url: "rest/user/logout",
+		type: "GET",
+		success: function(user, textStatus, xhr){
+			window.location = "program.html";
+		}
+	})
+});
 function getTicketHTML(ticket, counter){
  	return ticketPanel + panelHeading + ticket.movieTitle + closeDivs
  		+ panelBody + "<p>Ticket(s) bought: " + counter + ", price is " + counter*10 + " BGN</p>" + closeDivs + closeDivs;
