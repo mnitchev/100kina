@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
     @NamedQuery(name = "getTicketsByMovieTitle",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle"),
     @NamedQuery(name = "findTicketsByUser",
-    		query = "SELECT t.movieTitle FROM Ticket t WHERE t.userId=:id"),
+    		query = "SELECT t FROM Ticket t WHERE t.userId=:id"),
     @NamedQuery(name = "findTicket",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle AND t.seatNumber=:seatNumber")})
 public class Ticket implements Serializable{
@@ -36,9 +37,10 @@ public class Ticket implements Serializable{
 	
 	private Integer seatNumber;
 	
-	
+	@XmlElement
 	private String movieTitle;
 	
+	@XmlElement
 	private Long userId;
 	
 	@Temporal(TemporalType.DATE)

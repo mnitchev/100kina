@@ -72,7 +72,6 @@ public class TicketManager {
 	public Collection<Ticket> getAllTicketsForUser() {
 		User user = context.getCurrentUser();
 		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getId());
-		Class what = result.getClass();
 		return result;
 	}
 	
