@@ -3,6 +3,7 @@ package stoKina.services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,10 +26,12 @@ public class TicketOrganizer {
 			reservedTickets.remove(movieId);
 			return;
 		}
-		for(Ticket ticket : ticketsForMovie){
+		Iterator<Ticket> it = ticketsForMovie.iterator();
+		while(it.hasNext()){
+			Ticket ticket = it.next();
 			Date current = new Date();
 			if(!(current.getTime() - ticket.getTimeOfEntry().getTime() < Timer)){
-				ticketsForMovie.remove(ticket);
+				it.remove();
 				//reservedTickets.get(movieId).remove(ticket);
 			}
 			if(ticketsForMovie.isEmpty()){
@@ -47,6 +50,7 @@ public class TicketOrganizer {
 		if(ticketsForMovie == null){
 			return false;
 		}
+		
 		for (Ticket ticket : ticketsForMovie) {
 			if(ticket.getSeatNumber()==seatNumber)
 			{
