@@ -37,19 +37,7 @@ public class MovieManager {
 	@Path("getAllMovies")
 	@Produces("application/json")
 	public Collection<Movie> getAllMovies() {
-//        Collection<Movie> queryResult =  movieDAO.getAllMovies();
-//        Collection<SimpleMovie> simpleResult = new ArrayList<>();
-//        for(Movie movie : queryResult){
-//        	
-//        	simpleResult.add(new SimpleMovie(movie));
-//        }
-      //  JSONArray mJSONArray = new JSONArray(Arrays.asList(simpleResult));
-      //  return simpleResult;
-		
 		Collection<Movie> queryResult = movieDAO.getAllMovies();
-		for (Movie movie : queryResult) {
-			System.out.println(movie.getId());
-		}
 		return queryResult;
     }
 
@@ -66,24 +54,5 @@ public class MovieManager {
 	public Collection<Ticket> getAllTicketsForMovie(@PathParam("movieTitle") String movieTitle) {
 		return ticketDAO.getAllTicketsByMovieTitle(movieTitle);
 	}
-    
-    /*@GET
-	@Path("getReservedTickets")
-	@Produces("application/json")
-	public Collection<Ticket> getAllReservedTicketsForMovie(@PathParam("movieId") String movieId) {
-		return null;
-		//TODO: finish
-		//return ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
-	}*/
-
-    @POST
-    @Path("/buyTicket")
-    public Response buyTicketForMovie(@QueryParam("movieId") String movieId, String seatNumbers) {
-        Movie movieToReserve = movieDAO.findById(Integer.parseInt(movieId));
-        if (movieToReserve != null) {
-            //movieDAO.buyTicket(movieToReserve, userContext.getCurrentUser(), ticketDAO.findById(Long.parseLong(ticketId)));
-        	//TODO:
-        }
-        return Response.noContent().build();
-    }
+   
 }

@@ -32,7 +32,6 @@ public class TicketOrganizer {
 			Date current = new Date();
 			if(!(current.getTime() - ticket.getTimeOfEntry().getTime() < Timer)){
 				it.remove();
-				//reservedTickets.get(movieId).remove(ticket);
 			}
 			if(ticketsForMovie.isEmpty()){
 				break;

@@ -118,10 +118,7 @@ public class Ticket implements Serializable{
 	public void setMovie(Movie movie){
 		this.movieTitle = movie.getTitle();
 	}
-//	public void setMovieTitle(String movieTitle) {
-//		this.movieTitle = movieTitle;
-//	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

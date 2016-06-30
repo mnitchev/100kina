@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import stoKina.dao.MovieDAO;
 import stoKina.dao.TicketDAO;
+import stoKina.dao.UserDAO;
 import stoKina.model.Movie;
 import stoKina.model.Ticket;
 import stoKina.model.User;
@@ -34,6 +35,9 @@ public class TicketManager {
 		
 	@Inject
 	private UserContext context;
+	
+	@Inject
+	private UserDAO userDAO;
 	
 	@Inject
 	private TicketOrganizer to;
@@ -72,6 +76,15 @@ public class TicketManager {
 	@Produces("application/json")
 	public Collection<Ticket> getAllTicketsForUser() {
 		User user = context.getCurrentUser();
+		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getUserName());
+		return result;
+	}
+	
+	@GET
+	@Path("secure/getAllTicketsForUser")
+	@Produces("application/json")
+	public Collection<Ticket> getAllTicketsForUserStaff(@QueryParam("username") String username) {
+		User user = userDAO.findByUserName(username);
 		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getUserName());
 		return result;
 	}
@@ -155,6 +168,4 @@ public class TicketManager {
 		return Response.ok().build();
 	}
 	
-	
-
 }

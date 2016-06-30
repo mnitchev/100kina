@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+var ticketPanel = '<div class="panel panel-default" style="float:none!important!;margin-left:auto; margin-right:auto; position:relative;  width:40%">';
+var panelHeading = '<div class="panel-heading">';
+var closeDivs = '</div>';
+var panelBody = '<div class="panel-body">';
+var userName = "";
+var uniqueMovieContainer = [];
+var requiredUserName = "";
+
+$(document).ready(function(){
+	$.ajax({
+		url: "rest/user/current",
+		type: "GET",
+		dataType: "text",
+		success: function(user, textStatus, xhr){
+			userName = user;
+			if(userName != undefined) $("#currentUser").replaceWith('<a id="currentUser" href="#"> Logout (' + userName + ')</a>');
+		},
+	});
+});
+$(document).on('click', '#staff', function(){
+	requiredUserName = $("#username").val();
+	debugger;
+	console.log(queryUserName);
+	$.ajax({
+        url : "secure/getAllTicketsForUse?username=" + requiredUserName,
+        type : "GET",
+        accept: "application/json",
+        success : function(response) { 
+        	var htmlCollector = "";
+        	var wholePrice = 0;
+            response.ticket.forEach(function(ticket){
+            	if(!uniqueMovieContainer.includes(ticket.movieTitle.toString())){
+        			uniqueMovieContainer.push(ticket.movieTitle.toString());
+        			var counter = 0;
+            		var name = ticket.movieTitle;
+        			response.ticket.forEach(function(ticket2){
+            			if(name == ticket2.movieTitle){
+            				counter += 1;
+            			}
+            		})
+            		wholePrice += counter*10;
+        			htmlCollector += getTicketHTML(ticket, counter);
+        		}
+            })
+            htmlCollector += '<div class="well well-lg col-sm-3" style="text-align:center; float:none !important; margin-right:auto; margin-left:auto">Total cost of all tickets is ' + wholePrice + ' BGN</div>';
+            $("#ticketsContainer").html(htmlCollector);
+        }
+    
+	});
+})
+$(document).on('click', '#currentUser', function(){
+	$.ajax({
+		url: "rest/user/logout",
+		type: "GET",
+		success: function(user, textStatus, xhr){
+			window.location = "program.html";
+		}
+	})
+});
+function getTicketHTML(ticket, counter){
+ 	return ticketPanel + panelHeading + ticket.movieTitle + closeDivs
+ 		+ panelBody + "<p>Ticket(s) bought: " + counter + ", price is " + counter*10 + " BGN</p>" + closeDivs + closeDivs;
+ 	
+}
+
+</script>
+
+
+<!-- Header Navigation  -->
+    <div class="navbar navbar-default navbar-fixed-top">
+    	<div class="container">
+    		<div class="navbar-header">
+    			<a href="https://www.google.bg/" class="navbar-brand">100 KINA</a>
+    			 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+    		</div>
+    		<div class="navbar-collapse collapse" id="navbar-main">
+    			<ul class="nav navbar-nav">
+    				<li>
+    					<a href="program.html">Program</a>
+    				</li>
+    				<li>
+    					<a href="login.html">Login</a>
+    				</li>
+    				<li>
+    					<a href="register.html">Register</a>
+    				</li>
+    				<li>
+    					<a href="info.html">Info</a>
+    				</li>
+    			</ul>
+    			
+    			<ul class="nav navbar-nav navbar-right">
+       				<li><div id="currentUser"></div></li>
+       			</ul>
+    		</div>
+    	</div>
+    </div>
+    <div class="col-lg-6 col-md-offset-3">
+    	<div class="well bs-component">
+    		<form class="form-horizontal" method="post" id="register_form">
+			    <fieldset>
+			        <div class="form-group">
+			            <label for="userName" class="col-lg-3 control-label col-md-offset-1">User name</label>
+			            <div class="col-lg-7">
+			            	<input type="text" class="form-control" id="username" required="required" placeholder="User name" value="" />
+			        	</div>
+			        </div>
+			        <div class="col-lg-7 col-lg-offset-4">
+			        	<button type="submit" class="btn btn-default" id="staff">Submit</button>
+			       	</div>
+			    </fieldset>
+     		</form>
+    	</div>
+    </div>
+    
+    <div id="ticketsContainer"></div>
+    
+    </body>
+</html>

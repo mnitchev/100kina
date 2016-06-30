@@ -93,5 +93,4 @@ public class UserManager {
 		context.setCurrentUser(null);
 	}
 	
-	
 }

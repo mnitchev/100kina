@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import stoKina.model.User;
 import stoKina.services.UserContext;
 
-@WebFilter("/secure/*")
+@WebFilter("/rest/ticket/secure/*")
 public class StaffResourcesFilter implements Filter {
 	
 	@Inject
@@ -37,7 +37,7 @@ public class StaffResourcesFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		User currentUser = context.getCurrentUser();
-		if(currentUser == null || currentUser.getRole().equals(User.STAFF)){
+		if(currentUser == null || !currentUser.getRole().equals(User.STAFF)){
 			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
 			return;
 		}
