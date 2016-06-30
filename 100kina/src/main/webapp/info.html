@@ -14,6 +14,8 @@ var panelHeading = '<div class="panel-heading">';
 var closeDivs = '</div>';
 var panelBody = '<div class="panel-body">';
 var userName = "";
+var uniqueMovieContainer = [];
+
 $(document).ready(function(){
 	$.ajax({
 		url: "rest/user/current",
@@ -32,21 +34,33 @@ $(document).ready(function(){
         //contentType: "application/json;charset=UTF-8",
         //dataType: "json",
         success : function(response) { 
-         debugger;
-          var htmlCollector = "";
+        	var htmlCollector = "";
+        	var wholePrice = 0;
             response.ticket.forEach(function(ticket){
-            htmlCollector += getTicketHTML(ticket);
-            });
-            console.log(htmlCollector);
-            $("#movieContainer").html(htmlCollector);
+            	if(!uniqueMovieContainer.includes(ticket.movieTitle.toString())){
+        			uniqueMovieContainer.push(ticket.movieTitle.toString());
+        			var counter = 0;
+            		var name = ticket.movieTitle;
+        			response.ticket.forEach(function(ticket2){
+            			if(name == ticket2.movieTitle){
+            				counter += 1;
+            			}
+            		})
+            		wholePrice += counter*10;
+        			htmlCollector += getTicketHTML(ticket, counter);
+        		}
+            })
+            htmlCollector += '<div class="well well-lg col-sm-3" style="text-align:center; float:none !important; margin-right:auto; margin-left:auto">Total cost of all tickets is ' + wholePrice + ' BGN</div>';
+            $("#ticketsContainer").html(htmlCollector);
         }
-    });
- 
+    
+	});
 });
 
-function getTicketHTML(ticket){
- return ticketPanel + panelHeading + ticket.title + closeDivs;
-  //+ panelBody + '<ul class="pager"><li class="next"><a href="reserve.html#' + movie.title + '">Reserve &rarr;</a></li></ul></div></div>';
+function getTicketHTML(ticket, counter){
+ 	return ticketPanel + panelHeading + ticket.movieTitle + closeDivs
+ 		+ panelBody + "<p>Ticket(s) bought: " + counter + ", price is " + counter*10 + " BGN</p>" + closeDivs + closeDivs;
+ 	
 }
 
 </script>
@@ -85,6 +99,6 @@ function getTicketHTML(ticket){
     		</div>
     	</div>
     </div>
-    
+    <div id="ticketsContainer"></div>
     </body>
 </html>
