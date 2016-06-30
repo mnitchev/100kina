@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
     @NamedQuery(name = "getTicketsByMovieTitle",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle"),
     @NamedQuery(name = "findTicketsByUser",
-    		query = "SELECT t FROM Ticket t WHERE t.userId=:id"),
+    		query = "SELECT t FROM Ticket t WHERE t.userName=:username"),
     @NamedQuery(name = "findTicket",
     		query = "SELECT t FROM Ticket t WHERE t.movieTitle=:movieTitle AND t.seatNumber=:seatNumber")})
 public class Ticket implements Serializable{
@@ -41,7 +41,7 @@ public class Ticket implements Serializable{
 	private String movieTitle;
 	
 	@XmlElement
-	private Long userId;
+	private String userName;
 	
 	@Temporal(TemporalType.DATE)
 	@Transient
@@ -53,7 +53,7 @@ public class Ticket implements Serializable{
 	public Ticket(Integer seatNumber, User user, Movie movie) {
 		this.seatNumber = seatNumber;
 		this.movieTitle = movie.getTitle();
-		this.userId = user.getId();
+		this.userName = user.getUserName();
 		this.timeOfEntry = new Date();
 	}
 
@@ -112,7 +112,7 @@ public class Ticket implements Serializable{
 	}
 	
 	public void setOwner(User user){
-		this.userId = user.getId();
+		this.userName = user.getUserName();
 	}
 	
 	public void setMovie(Movie movie){

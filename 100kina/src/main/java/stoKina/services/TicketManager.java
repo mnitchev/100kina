@@ -57,6 +57,7 @@ public class TicketManager {
 			}
 		}
 		Integer movieId = movieDAO.findByTitle(movieTitle).getId();
+		to.cleanBlocked(movieId);
 		Collection<Ticket> blocked = to.getAllReservedForMovie(movieId);
 		if(blocked != null){
 			for(Ticket ticket : blocked){
@@ -71,24 +72,10 @@ public class TicketManager {
 	@Produces("application/json")
 	public Collection<Ticket> getAllTicketsForUser() {
 		User user = context.getCurrentUser();
-		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getId());
+		Collection<Ticket> result = ticketDAO.getAllTicketsByUserId(user.getUserName());
 		return result;
 	}
 	
-	@GET
-	@Path("getReservedTickets")
-	@Produces("application/json")
-	public Collection<Ticket> getAllReservedTicketsForMovie(@PathParam("movieId") String movieId) {
-		return null;
-		//TODO: finish
-		//return .!.. ticketMaster.getReservedTicketsByMovieId(Long.parseLong(movieId));
-	}
-	
-	/*@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void addTicket(Ticket ticket){
-		ticketDAO.addTicket(ticket);
-	}*/
 	
 	@Path("buy")
 	@POST

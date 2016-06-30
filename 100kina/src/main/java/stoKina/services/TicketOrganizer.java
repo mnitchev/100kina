@@ -13,8 +13,34 @@ import stoKina.model.Ticket;
 
 @ApplicationScoped
 public class TicketOrganizer {
-	public static final int Timer = 600000;
+	public static final int Timer = 10000;
 	private ConcurrentHashMap<Integer , List<Ticket>> reservedTickets = new ConcurrentHashMap<>();
+	
+	public void cleanBlocked(Integer movieId){
+		if(!reservedTickets.containsKey(movieId)){
+			return;
+		}
+		List<Ticket> ticketsForMovie = this.reservedTickets.get(movieId);
+		if(ticketsForMovie == null){
+			reservedTickets.remove(movieId);
+			return;
+		}
+		for(Ticket ticket : ticketsForMovie){
+			Date current = new Date();
+			if(!(current.getTime() - ticket.getTimeOfEntry().getTime() < Timer)){
+				ticketsForMovie.remove(ticket);
+				//reservedTickets.get(movieId).remove(ticket);
+			}
+			if(ticketsForMovie.isEmpty()){
+				break;
+			}
+		}
+		if(ticketsForMovie.isEmpty()){
+			reservedTickets.remove(movieId);
+			return;
+		}
+		reservedTickets.put(movieId, ticketsForMovie);
+	}
 	
 	public boolean isTicketReseved(Integer movieId , int seatNumber) {
 		List<Ticket> ticketsForMovie = this.reservedTickets.get(movieId);
